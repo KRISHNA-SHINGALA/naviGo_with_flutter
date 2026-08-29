@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
+import '../auth/login_screen.dart'; 
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -12,9 +14,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    
     Timer(const Duration(seconds: 3), () {
+      
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const DummyLoginScreen()),
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
       );
     });
   }
@@ -29,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             Image.asset(
               'assets/images/navigo_white_logo.png',
-              width: 180, 
+              width: 180,
               errorBuilder: (context, error, stackTrace) {
                 return const Text(
                   'NaviGo',
@@ -48,18 +52,6 @@ class _SplashScreenState extends State<SplashScreen> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class DummyLoginScreen extends StatelessWidget {
-  const DummyLoginScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Login Screen Placeholder')),
-      body: const Center(child: Text('Auth Module Coming Soon!')),
     );
   }
 }
