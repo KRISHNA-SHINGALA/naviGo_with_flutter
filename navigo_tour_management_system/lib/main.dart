@@ -5,6 +5,8 @@ void main() {
   runApp(const NaviGoApp());
 }
 
+
+
 class NaviGoApp extends StatelessWidget {
   const NaviGoApp({super.key});
 
