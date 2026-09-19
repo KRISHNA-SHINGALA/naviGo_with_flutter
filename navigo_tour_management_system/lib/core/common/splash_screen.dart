@@ -1,7 +1,8 @@
-import 'dart:async';
-import 'package:flutter/material.dart';
 
-import '../auth/login_screen.dart'; 
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:navigo_tour_management_system/core/auth/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -11,46 +12,46 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
   @override
   void initState() {
     super.initState();
-    
-    Timer(const Duration(seconds: 3), () {
-      
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-      );
+
+    Timer(const Duration(seconds: 2), () {
+      if (mounted) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => LoginScreen(),
+          ),
+        );
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0056D2), 
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
+      backgroundColor: const Color(0xFF0056D2),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Center(
+            child: Image.asset(
               'assets/images/navigo_white_logo.png',
-              width: 180,
-              errorBuilder: (context, error, stackTrace) {
-                return const Text(
-                  'NaviGo',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                  ),
-                );
-              },
+              width: 200,
+              height: 200,
             ),
-            const SizedBox(height: 20),
-            const CircularProgressIndicator(
-              color: Colors.white,
-            ),
-          ],
-        ),
+          ),
+          SizedBox(height: 10,),
+          SizedBox(
+          width: 35,
+          height: 35,
+          child: CircularProgressIndicator(
+            color: Colors.white,
+          ),
+        )   
+        ],
       ),
     );
   }
