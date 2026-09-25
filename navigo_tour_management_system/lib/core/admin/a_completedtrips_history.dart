@@ -21,6 +21,7 @@ class _ACompletedtripsHistoryState extends State<ACompletedtripsHistory> {
       'Passengers':'35 Passengers',
       'Price':'₹52,000'
     },
+    
     {
       'Place':'Goa',
       'Date':'mar 20 - mar 26, 2026',
