@@ -97,11 +97,11 @@ class _AdminLoginState extends State<AdminLogin> {
                       return "Password must contain 2 numbers";
                     }
 
-                    // 2 special characters
+                    //1 special characters
                     if (!RegExp(
-                      r'(.*[!@#$%^&*(),.?":{}|<>_\-]){2}',
+                      r'(.*[!@#$%^&*(),.?":{}|<>_\-]){1}',
                     ).hasMatch(value)) {
-                      return "Password must contain 2 special characters";
+                      return "Password must contain 1 special characters";
                     }
 
                     //8 characters
