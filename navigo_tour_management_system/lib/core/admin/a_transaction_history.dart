@@ -8,127 +8,118 @@ class ATransactionHistory extends StatefulWidget {
 }
 
 class _ATransactionHistoryState extends State<ATransactionHistory> {
-  final transaction =[
-    {
-      'name':'Arjun Malotra',
-      'place':'Rajasthan Heritage Tour',
-      'date&time':'Oct 24 , 10:45AM',
-      'price':'+₹3,000',
-      'status':'SUCCESS'   
-    },
-    {
-      'name':'Arjun Malotra',
-      'place':'Rajasthan Heritage Tour',
-      'date&time':'Oct 24 , 10:45AM',
-      'price':'-₹1,500',
-      'status':'REFUNDED'   
-    },    
-    {
-      'name':'Heet Tala',
-      'place':'Rajasthan Heritage Tour',
-      'date&time':'Oct 25 , 10:45AM',
-      'price':'+₹4,000',
-      'status':'SUCCESS'   
-  
-    }
-  ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          
-          padding: const EdgeInsets.all(18),
-          
+    return  Scaffold(
+      body:SingleChildScrollView(
+        child:Padding(
+          padding:const EdgeInsets.all(20),
+
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-              width: double.infinity,  
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 128, 196, 252),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      
-                      Text(
-                        'Financial Summary',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: const Color.fromARGB(255, 6, 4, 72),
-                          fontWeight: FontWeight.w500
-                        ),
-                      ),
-                      const Text(
-                        'Net Income',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-                      const SizedBox(height:55),
+                width: double.infinity,
+                padding: const EdgeInsets.all(40),
 
-                      const Text(
-                        'Total Received',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Color.fromARGB(255, 55, 54, 54)
-                        ),
-                        ),
-                        const Text(
-                          '₹4.5L',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold
-                          ),
-                        )
-                      ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 159, 174, 248),
+                  borderRadius: BorderRadius.circular(15)
+                ),
+                child:Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                    'Financial Summary',
+                    style: TextStyle(
+                    color: Color.fromARGB(255, 7, 3, 51),
+                    fontSize: 15,
+                    ),
+                   ),
+                   Row(
                     children: [
-                      Text(
-                        '₹ 4.2L',
+                      const Text(
+                        'Net Income ',
                         style: TextStyle(
-                          fontSize: 30,
-                          color: const Color.fromARGB(255, 5, 53, 125),
+                          color: Color.fromARGB(255, 79, 78, 78),
+                          fontSize:20,
                           fontWeight: FontWeight.bold
                         ),
                       ),
-                      const SizedBox(height:55),
+                      const Spacer(),
                       const Text(
-                        'Refunded',
+                        '₹4.2L',
                         style: TextStyle(
-                          fontSize: 15,
-                          color: Color.fromARGB(255, 55, 54, 54)
-                        ),
-                      ),
-                      const Text(
-                        '₹30K',
-                        style:TextStyle(
-                          fontSize: 20,
-                          color:Color.fromARGB(255, 180, 26, 15),
-                          fontWeight: FontWeight.bold
+                         color: Color.fromARGB(255, 2, 2, 84),
+                         fontSize: 25,
+                         fontWeight: FontWeight.bold
                         ),
                       ),
                     ],
-                  )
-                ],
-              ),
-            ),
-          ]
-          ),
+                   ),
+                   const SizedBox(height: 20),
 
-        ),
-     ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Total Recevied',
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Color.fromARGB(255, 52, 52, 52),
+                            ),
+                          ),
+                          const Spacer(),
+                          const Text(
+                            'Refunded',
+                            style: TextStyle(
+                            fontSize: 15,
+                            color:  Color.fromARGB(255, 52, 52, 52),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                   ),
+                   const SizedBox(height:20),
+
+                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          '₹4.5L',
+                          style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold
+                          ),
+                        ),
+                        const Spacer(),
+                        const Text(
+                          '₹30K',
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 170, 17, 6),
+                            fontWeight: FontWeight.bold
+                          ),
+                        ) 
+                      ],
+                    )
+                    ],
+                   )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ) ,
+      )
+
     );
-          
   }
 }
