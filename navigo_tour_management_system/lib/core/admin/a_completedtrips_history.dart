@@ -35,15 +35,15 @@ class _ACompletedtripsHistoryState extends State<ACompletedtripsHistory> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(18),
+          padding: const EdgeInsets.all(5),
           
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.blue.shade500,
-                borderRadius: BorderRadius.circular(12),
+                color: const Color(0xFFD7E3FF),
+                borderRadius: BorderRadius.circular(13),
               ),
               
               child: Row(
@@ -54,7 +54,7 @@ class _ACompletedtripsHistoryState extends State<ACompletedtripsHistory> {
                       Text(
                         'TOTAL REVENUE',
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 12,
                           color: Colors.blue.shade900,
                           fontWeight: FontWeight.bold,
                         ),
@@ -64,7 +64,7 @@ class _ACompletedtripsHistoryState extends State<ACompletedtripsHistory> {
                       const Text(
                         '₹4.5L',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 15,
                           fontWeight: FontWeight.bold
                         ),
                       ),
@@ -76,7 +76,7 @@ class _ACompletedtripsHistoryState extends State<ACompletedtripsHistory> {
                       Text(
                         'COMPLETED',
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 12,
                           color:Colors.blue.shade900,
                           fontWeight: FontWeight.bold
                         ),
@@ -86,7 +86,7 @@ class _ACompletedtripsHistoryState extends State<ACompletedtripsHistory> {
                       const Text(
                         '24',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 15,
                           fontWeight: FontWeight.bold
                         ),
                       ),
@@ -97,7 +97,7 @@ class _ACompletedtripsHistoryState extends State<ACompletedtripsHistory> {
                       Text(
                         'PASSENGERS',
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 12,
                           color: Colors.blue.shade900,
                           fontWeight: FontWeight.bold
                         ),
@@ -106,7 +106,7 @@ class _ACompletedtripsHistoryState extends State<ACompletedtripsHistory> {
                       const Text(
                         '850',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 15,
                           fontWeight: FontWeight.bold
                         ),
                       )
@@ -115,7 +115,7 @@ class _ACompletedtripsHistoryState extends State<ACompletedtripsHistory> {
                 ],
               ),
             ),
-            const SizedBox(height: 25),
+            const SizedBox(height: 10),
 
             Row(mainAxisAlignment:
              MainAxisAlignment.spaceBetween,
@@ -124,22 +124,22 @@ class _ACompletedtripsHistoryState extends State<ACompletedtripsHistory> {
               Text(
                 'Recent Completions',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text('2024 (current Year)',
               style: TextStyle(
-                fontSize: 11,
+                fontSize: 10,
                 fontWeight: FontWeight.bold,
               ),
               )
              ],
             ),
-           const SizedBox(height:20),
+           const SizedBox(height:10),
            for(final trip in trips)
            Card(
-            margin: const EdgeInsets.only(bottom: 18),
+            margin: const EdgeInsets.only(bottom: 10),
             elevation: 2,
             shape: RoundedRectangleBorder(
               borderRadius:BorderRadius.circular(10),

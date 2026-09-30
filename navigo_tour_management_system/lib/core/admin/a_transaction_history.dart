@@ -10,50 +10,107 @@ class ATransactionHistory extends StatefulWidget {
 class _ATransactionHistoryState extends State<ATransactionHistory> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body:SingleChildScrollView(
+    return  Scaffold(
+      body: SingleChildScrollView(
         child: Padding(
-          padding:const EdgeInsets.all(20),
-
+          padding: const  EdgeInsets.all(5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.blue.shade500,
-                  borderRadius: BorderRadius.circular(10)
+                color: const Color(0xFFD7E3FF),
+                borderRadius: BorderRadius.circular(12)
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    const Text(
+                      'Financial Summary',
+                      style: TextStyle(
+                      color: Color.fromARGB(255, 48, 48, 48),
+                      fontSize: 12
+                      ), 
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          'Financial Summary',
+                        'Net Income',
                           style: TextStyle(
-                          color: Color.fromARGB(255, 1, 8, 53),
-                          fontSize: 15
+                          color: Color.fromARGB(255, 56, 56, 56),
+                          fontSize: 15,
                           ),
                         ),
                         const Text(
-                          'Net Income',
+                          '₹4.2L',
                           style: TextStyle(
-                            fontSize: 15,
-                            color: Color.fromARGB(255, 39, 39, 39),
-                            fontWeight: FontWeight.bold
+                          color: Color.fromARGB(255, 12, 16, 73),
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
                           ),
-                        ), 
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 30),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children:[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        
+                      children: [
+                        const Text(
+                        'Total Received ',
+                        style: TextStyle(
+                        color: Color.fromARGB(255, 56, 56, 56),
+                        fontSize: 10,
+                        
+                        ),
+                        ),
+                         const Text(
+                        '₹4.5L',
+                        style: TextStyle(
+                        color: Color.fromARGB(255, 56, 56, 56),
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold
+                        ),
+                        ),
+                      ],
+                    ),
+                        Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                        'Refunded',
+                        style: TextStyle(
+                        color: Color.fromARGB(255, 56, 56, 56),
+                        fontSize: 10,
+
+                        ),
+                        ),
+                        
+                        const Text(
+                        '₹30K',
+                        style: TextStyle(
+                        color: Color.fromARGB(255, 104, 3, 3),
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold
+
+                        ),
+                        ),
                       ],
                     )
                   ],
-                ),
+                )
+              ],
+            ),
               )
             ],
           ),
-          ),
-      ) ,
+        ),
+      ),
     );
   }
 }
