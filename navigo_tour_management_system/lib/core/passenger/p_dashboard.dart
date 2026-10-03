@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:navigo_tour_management_system/resources/colors.dart';
-import 'package:navigo_tour_management_system/resources/image.dart';
-// import 'package:navigo_tour_management_system/resources/images.dart';
 import 'package:navigo_tour_management_system/resources/strings.dart';
+
+class AppImages {
+  static const String mahakaleshwar = 'assets/images/mahakaleshwar.jpg';
+  static const String solangValley = 'assets/images/solang_valley.jpg';
+  static const String jaswantThada = 'assets/images/jaswant_thada.jpg';
+}
 
 class PassDashboard extends StatefulWidget {
   const PassDashboard({super.key});
