@@ -48,6 +48,17 @@ class _ActivebookingState extends State<Activebooking> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+         appBar: AppBar(
+        title: const Text(
+          'Passenagers & Requests',
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: false,      ),
       body: SingleChildScrollView(
         child: Padding(
           padding:const EdgeInsets.all(5),
