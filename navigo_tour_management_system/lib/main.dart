@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-//import 'package:navigo_tour_management_system/core/admin/cancelreq.dart';
-// import 'package:navigo_tour_management_system/core/admin/activebooking.dart';
+//import 'package:navigo_tour_management_system/core/admin/a_dashboard.dart';
+//import 'package:navigo_tour_management_system/core/passenger/p_dashboard.dart';
+//import 'package:navigo_tour_management_system/core/admin/a_cancelreq.dart';
+// import 'package:navigo_tour_management_system/core/admin/a_activebooking.dart';
 //import 'package:navigo_tour_management_system/core/admin/a_completedtrips_history.dart';
 //import 'package:navigo_tour_management_system/core/admin/a_transaction_history.dart';
 import 'package:navigo_tour_management_system/core/auth/login_screen.dart';
@@ -17,7 +19,7 @@ class NaviGoApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false, 
-      home:LoginScreen ()
+      home:const LoginScreen(),
     );
   }
 }
