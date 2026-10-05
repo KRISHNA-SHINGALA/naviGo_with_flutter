@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 
-class PUpcoming extends StatefulWidget {
-  const PUpcoming({super.key});
+class PPastTrips extends StatefulWidget {
+  const PPastTrips({super.key});
 
   @override
-  State<PUpcoming> createState() => _PUpcomingState();
+  State<PPastTrips> createState() => _PPastTripsState();
 }
 
-class _PUpcomingState extends State<PUpcoming> {
-  // Static List Data
+class _PPastTripsState extends State<PPastTrips> {
+  // Static List Data for Past Trips
   final List<Map<String, String>> trips = [
     {
-      'title': 'Swiss Alpine Express',
+      'title': 'Kerala',
       'date': 'Dec 05 - Dec 12, 2025',
       'status': 'Confirmed',
-      'imagePath': 'assets/images/express.jpg',
+      'imagePath': 'assets/images/Kerala.jpg',
     },
     {
-      'title': 'Amalfi Coast Expedition',
+      'title': 'Goa',
       'date': 'Oct 12 - Oct 18, 2024',
       'status': 'Confirmed',
-      'imagePath': 'assets/images/Amalfi Coast Expedition.jpg',
+      'imagePath': 'assets/images/Goa.jpg',
     },
   ];
 
@@ -58,7 +58,6 @@ class _PUpcomingState extends State<PUpcoming> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // 🖼️ ASSET IMAGE WIDGET
                       ClipRRect(
                         borderRadius: BorderRadius.circular(12),
                         child: Image.asset(
@@ -66,7 +65,7 @@ class _PUpcomingState extends State<PUpcoming> {
                           height: 90,
                           width: 90,
                           fit: BoxFit.cover,
-                          // Agar image path galat ho ya image na mile to ye icon dikhega
+                          // Agar image path galat ho ya image na mile to fallback icon dikhega
                           errorBuilder: (context, error, stackTrace) {
                             return Container(
                               height: 90,
@@ -80,7 +79,7 @@ class _PUpcomingState extends State<PUpcoming> {
 
                       const SizedBox(height: 12),
 
-                      // Confirmed Badge
+                      // Confirmed Status Badge
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
@@ -113,7 +112,7 @@ class _PUpcomingState extends State<PUpcoming> {
 
                       const SizedBox(height: 8),
 
-                      // Title
+                      // Place Name / Title
                       Text(
                         trip['title']!,
                         style: const TextStyle(
@@ -125,7 +124,7 @@ class _PUpcomingState extends State<PUpcoming> {
 
                       const SizedBox(height: 4),
 
-                      // Date
+                      // Dates
                       Text(
                         trip['date']!,
                         style: TextStyle(
