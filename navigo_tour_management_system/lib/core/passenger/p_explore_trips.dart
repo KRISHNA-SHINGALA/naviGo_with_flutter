@@ -13,6 +13,11 @@ class PassengerExploreTrips extends StatefulWidget {
 class _PassengerExploreTripsState
     extends State<PassengerExploreTrips> {
 
+  // 0 = All Trips
+  // 1 = This Week
+  // 2 = This Month
+  int selectedTab = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,58 +110,202 @@ class _PassengerExploreTripsState
                   ),
                 ),
 
+                const SizedBox(height: 10),
+
+                // ==================================================
+                // FILTER TABS
+                // ==================================================
+
+                Row(
+                  children: [
+
+                    Expanded(
+                      child: _buildFilterTab(
+                        title: 'All Trips',
+                        index: 0,
+                      ),
+                    ),
+
+                    const SizedBox(width: 5),
+
+                    Expanded(
+                      child: _buildFilterTab(
+                        title: 'This Week',
+                        index: 1,
+                      ),
+                    ),
+
+                    const SizedBox(width: 5),
+
+                    Expanded(
+                      child: _buildFilterTab(
+                        title: 'This Month',
+                        index: 2,
+                      ),
+                    ),
+                  ],
+                ),
+
                 const SizedBox(height: 14),
 
                 // ==================================================
-                // TRIP CARD 1
+                // TRIPS
                 // ==================================================
 
-                _buildTripCard(
-                  image: AppImages.mahakaleshwar,
-
-                  title: 'Mahakaleshwar, Ujjain',
-
-                  rating: '4.9',
-
-                  date: '15 Oct - 20 Oct',
-
-                  vehicle: 'Premium AC Sleeper',
-
-                  seats: '15 Seats Available',
-
-                  seatsAvailable: true,
-
-                  price: '₹ 5000',
-                ),
-
-                const SizedBox(height: 12),
-
-                // ==================================================
-                // TRIP CARD 2
-                // ==================================================
-
-                _buildTripCard(
-                  image: AppImages.solangValley,
-
-                  title: 'Solang Valley, Manali',
-
-                  rating: '4.7',
-
-                  date: '22 Oct - 28 Oct',
-
-                  vehicle: 'Luxury Executive',
-
-                  seats: '2 Seats Available',
-
-                  seatsAvailable: false,
-
-                  price: '₹ 10,000',
-                ),
+                _buildSelectedTrips(),
 
                 const SizedBox(height: 20),
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  // ==============================================================
+  // FILTER TAB
+  // ==============================================================
+
+  Widget _buildFilterTab({
+    required String title,
+    required int index,
+  }) {
+    final bool isSelected = selectedTab == index;
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedTab = index;
+        });
+      },
+
+      child: Container(
+        height: 25,
+
+        decoration: BoxDecoration(
+          color: isSelected
+              ? AppColors.primary
+              : const Color(0xFFD5D5D5),
+
+          borderRadius:
+              BorderRadius.circular(15),
+        ),
+
+        alignment: Alignment.center,
+
+        child: Text(
+          title,
+
+          style: TextStyle(
+            fontSize: 9,
+            fontWeight: FontWeight.w500,
+
+            color: isSelected
+                ? Colors.white
+                : const Color(0xFF666666),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ==============================================================
+  // SELECTED TRIPS
+  // ==============================================================
+
+  Widget _buildSelectedTrips() {
+
+    // ALL TRIPS
+    if (selectedTab == 0) {
+      return Column(
+        children: [
+
+          _buildTripCard(
+            image: AppImages.mahakaleshwar,
+            title: 'Mahakaleshwar, Ujjain',
+            rating: '4.9',
+            date: '15 Oct - 20 Oct',
+            vehicle: 'Premium AC Sleeper',
+            seats: '15 Seats Available',
+            seatsAvailable: true,
+            price: '₹ 5000',
+          ),
+
+          const SizedBox(height: 12),
+
+          _buildTripCard(
+            image: AppImages.solangValley,
+            title: 'Solang Valley, Manali',
+            rating: '4.7',
+            date: '22 Oct - 28 Oct',
+            vehicle: 'Luxury Executive',
+            seats: '2 Seats Available',
+            seatsAvailable: false,
+            price: '₹ 10,000',
+          ),
+        ],
+      );
+    }
+
+    // THIS WEEK
+    if (selectedTab == 1) {
+      return _buildNoTripsMessage(
+        'No trips available this week.',
+      );
+    }
+
+    // THIS MONTH
+    return Column(
+      children: [
+
+        _buildTripCard(
+          image: AppImages.mahakaleshwar,
+          title: 'Mahakaleshwar, Ujjain',
+          rating: '4.9',
+          date: '15 Oct - 20 Oct',
+          vehicle: 'Premium AC Sleeper',
+          seats: '15 Seats Available',
+          seatsAvailable: true,
+          price: '₹ 5000',
+        ),
+
+        const SizedBox(height: 12),
+
+        _buildTripCard(
+          image: AppImages.solangValley,
+          title: 'Solang Valley, Manali',
+          rating: '4.7',
+          date: '22 Oct - 28 Oct',
+          vehicle: 'Luxury Executive',
+          seats: '2 Seats Available',
+          seatsAvailable: false,
+          price: '₹ 10,000',
+        ),
+      ],
+    );
+  }
+
+  // ==============================================================
+  // NO TRIPS MESSAGE
+  // ==============================================================
+
+  Widget _buildNoTripsMessage(String message) {
+    return Container(
+      width: double.infinity,
+
+      padding: const EdgeInsets.symmetric(
+        vertical: 40,
+      ),
+
+      alignment: Alignment.center,
+
+      child: Text(
+        message,
+
+        style: const TextStyle(
+          fontSize: 12,
+          color: Color(0xFF777777),
         ),
       ),
     );
@@ -182,7 +331,8 @@ class _PassengerExploreTripsState
       decoration: BoxDecoration(
         color: Colors.white,
 
-        borderRadius: BorderRadius.circular(8),
+        borderRadius:
+            BorderRadius.circular(8),
 
         border: Border.all(
           color: const Color(0xFFD5D5D5),
@@ -190,7 +340,8 @@ class _PassengerExploreTripsState
       ),
 
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment:
+            CrossAxisAlignment.start,
 
         children: [
 
@@ -199,7 +350,8 @@ class _PassengerExploreTripsState
           // ========================================================
 
           ClipRRect(
-            borderRadius: const BorderRadius.vertical(
+            borderRadius:
+                const BorderRadius.vertical(
               top: Radius.circular(8),
             ),
 
@@ -253,7 +405,8 @@ class _PassengerExploreTripsState
 
                         style: const TextStyle(
                           fontSize: 12,
-                          fontWeight: FontWeight.w600,
+                          fontWeight:
+                              FontWeight.w600,
                           color: Colors.black,
                         ),
                       ),
@@ -341,7 +494,8 @@ class _PassengerExploreTripsState
                 // --------------------------------------------------
 
                 Container(
-                  padding: const EdgeInsets.symmetric(
+                  padding:
+                      const EdgeInsets.symmetric(
                     horizontal: 7,
                     vertical: 3,
                   ),
@@ -356,7 +510,8 @@ class _PassengerExploreTripsState
                   ),
 
                   child: Row(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisSize:
+                        MainAxisSize.min,
 
                     children: [
 
@@ -393,28 +548,94 @@ class _PassengerExploreTripsState
                 const SizedBox(height: 7),
 
                 // --------------------------------------------------
-                // PRICE
+                // PRICE + VIEW DETAILS
                 // --------------------------------------------------
 
-                const Text(
-                  'Starting at',
+                Row(
+                  crossAxisAlignment:
+                      CrossAxisAlignment.end,
 
-                  style: TextStyle(
-                    fontSize: 8,
-                    color: Color(0xFF666666),
-                  ),
-                ),
+                  children: [
 
-                const SizedBox(height: 1),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment:
+                            CrossAxisAlignment.start,
 
-                Text(
-                  price,
+                        children: [
 
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.primary,
-                  ),
+                          const Text(
+                            'Starting at',
+
+                            style: TextStyle(
+                              fontSize: 8,
+                              color: Color(0xFF666666),
+                            ),
+                          ),
+
+                          const SizedBox(height: 1),
+
+                          Text(
+                            price,
+
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight:
+                                  FontWeight.w600,
+                              color:
+                                  AppColors.primary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // VIEW DETAILS BUTTON
+                    SizedBox(
+                      height: 31,
+
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // View Details action
+                          // will be connected later.
+                        },
+
+                        style:
+                            ElevatedButton.styleFrom(
+                          backgroundColor:
+                              AppColors.primary,
+
+                          foregroundColor:
+                              Colors.white,
+
+                          elevation: 0,
+
+                          padding:
+                              const EdgeInsets.symmetric(
+                            horizontal: 24,
+                          ),
+
+                          shape:
+                              RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(
+                              18,
+                            ),
+                          ),
+                        ),
+
+                        child: const Text(
+                          'View Details',
+
+                          style: TextStyle(
+                            fontSize: 9,
+                            fontWeight:
+                                FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

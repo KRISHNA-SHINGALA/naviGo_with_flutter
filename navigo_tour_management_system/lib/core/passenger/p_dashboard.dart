@@ -36,7 +36,6 @@ class _PassDashboardState extends State<PassDashboard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     Text(
                       AppStrings.welcomeBack,
                       style: const TextStyle(
@@ -109,7 +108,6 @@ class _PassDashboardState extends State<PassDashboard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-
                     const Text(
                       AppStrings.upcomingTours,
                       style: TextStyle(
@@ -180,7 +178,6 @@ class _PassDashboardState extends State<PassDashboard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-
                     const Text(
                       AppStrings.popularDestinations,
                       style: TextStyle(
@@ -352,14 +349,48 @@ class _PassDashboardState extends State<PassDashboard> {
 
                 const SizedBox(height: 6),
 
-                Text(
-                  price,
+                // PRICE + BOOK BUTTON
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
 
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primary,
-                  ),
+                    Text(
+                      price,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primary,
+                      ),
+                    ),
+
+                    SizedBox(
+                      height: 30,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // Booking action will be connected later.
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          foregroundColor: Colors.white,
+                          elevation: 0,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 18,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                        child: const Text(
+                          'Book',
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

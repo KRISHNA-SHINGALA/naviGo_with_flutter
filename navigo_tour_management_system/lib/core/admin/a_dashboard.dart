@@ -12,6 +12,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -102,7 +103,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
                 const SizedBox(height: 14),
 
-                // // Ooty
+                // Ooty
                 // _buildTripCard(
                 //   image: 'assets/images/ooty.jpg',
                 //   title: 'Ooty',
@@ -114,6 +115,24 @@ class _AdminDashboardState extends State<AdminDashboard> {
               ],
             ),
           ),
+        ),
+      ),
+
+      // ============================================================
+      // ADD TRIP CIRCLE BUTTON
+      // ============================================================
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Add Trip action will be connected later.
+        },
+        backgroundColor: const Color(0xFF2626E8),
+        elevation: 3,
+        shape: const CircleBorder(),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+          size: 28,
         ),
       ),
     );

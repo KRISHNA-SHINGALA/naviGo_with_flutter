@@ -14,16 +14,11 @@ class PassengerMapView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // const Text(
-              //   'Map View',
-              //   style: TextStyle(
-              //     fontSize: 20,
-              //     fontWeight: FontWeight.w600,
-              //     color: AppColors.textPrimary,
-              //   ),
-              // ),
-
               const SizedBox(height: 16),
+
+              // ==================================================
+              // MAP
+              // ==================================================
 
               Container(
                 width: double.infinity,
@@ -44,6 +39,10 @@ class PassengerMapView extends StatelessWidget {
               ),
 
               const SizedBox(height: 16),
+
+              // ==================================================
+              // ROUTE ANALYSIS
+              // ==================================================
 
               const Text(
                 'ROUTE ANALYSIS',
@@ -76,6 +75,10 @@ class PassengerMapView extends StatelessWidget {
 
               const SizedBox(height: 12),
 
+              // ==================================================
+              // INFORMATION BOXES
+              // ==================================================
+
               Row(
                 children: [
                   Expanded(
@@ -84,7 +87,9 @@ class PassengerMapView extends StatelessWidget {
                       value: '8 Hours',
                     ),
                   ),
+
                   const SizedBox(width: 10),
+
                   Expanded(
                     child: _buildInfoBox(
                       title: 'Avg',
@@ -93,12 +98,61 @@ class PassengerMapView extends StatelessWidget {
                   ),
                 ],
               ),
+
+              const SizedBox(height: 14),
+
+              // ==================================================
+              // BACK TO BOOKING BUTTON
+              // ==================================================
+
+              SizedBox(
+                width: double.infinity,
+                height: 40,
+                child: ElevatedButton(
+                  onPressed: () {},
+
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        Icons.arrow_back,
+                        size: 16,
+                      ),
+
+                      SizedBox(width: 8),
+
+                      Text(
+                        'Back to booking',
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 10),
             ],
           ),
         ),
       ),
     );
   }
+
+  // ==============================================================
+  // INFORMATION BOX
+  // ==============================================================
 
   Widget _buildInfoBox({
     required String title,
@@ -123,7 +177,9 @@ class PassengerMapView extends StatelessWidget {
               color: AppColors.textSecondary,
             ),
           ),
+
           const SizedBox(height: 3),
+
           Text(
             value,
             style: const TextStyle(
