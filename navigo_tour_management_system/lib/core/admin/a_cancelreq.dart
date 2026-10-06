@@ -222,6 +222,65 @@ class _CancelRequestState
                           color: Colors.black,
                         ),
                       ),
+
+                      const SizedBox(height: 15),
+
+                      // Approve Refund and Decline buttons
+                      Row(
+                        mainAxisAlignment:
+                            MainAxisAlignment.spaceEvenly,
+                        children: [
+
+                          ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  const Color(0xFF0047AB),
+                              foregroundColor: Colors.white,
+                              padding:
+                                  const EdgeInsets.symmetric(
+                                horizontal: 15,
+                                vertical: 8,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(5),
+                              ),
+                            ),
+                            child: const Text(
+                              'Approve Refund',
+                              style: TextStyle(
+                                fontSize: 10,
+                              ),
+                            ),
+                          ),
+
+                          OutlinedButton(
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: Colors.red,
+                              side: const BorderSide(
+                                color: Colors.red,
+                              ),
+                              padding:
+                                  const EdgeInsets.symmetric(
+                                horizontal: 25,
+                                vertical: 8,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(5),
+                              ),
+                            ),
+                            child: const Text(
+                              'Decline',
+                              style: TextStyle(
+                                fontSize: 10,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
