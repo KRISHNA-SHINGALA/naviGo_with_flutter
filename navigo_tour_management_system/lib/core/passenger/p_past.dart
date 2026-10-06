@@ -151,6 +151,44 @@ class _PPastTripsState extends State<PPastTrips> {
                       color: Colors.grey.shade600,
                     ),
                   ),
+
+                  const SizedBox(height: 12),
+
+                  // View Ticket Button
+                  SizedBox(
+                    width: double.infinity,
+
+                    child: OutlinedButton(
+                      onPressed: () {
+                        // View Ticket
+                      },
+
+                      style: OutlinedButton.styleFrom(
+                        side: const BorderSide(
+                          color: Colors.blue,
+                        ),
+
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(8),
+                        ),
+
+                        padding:
+                            const EdgeInsets.symmetric(
+                          vertical: 10,
+                        ),
+                      ),
+
+                      child: const Text(
+                        'View Ticket',
+
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

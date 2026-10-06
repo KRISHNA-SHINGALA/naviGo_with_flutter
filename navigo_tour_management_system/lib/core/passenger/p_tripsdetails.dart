@@ -638,22 +638,31 @@ class _TripdetailsState extends State<Tripdetails> {
 
             const SizedBox(height: 15),
 
-            // View On Route Map
+            // View On Route Map BUTTON
             Container(
               margin:
                   const EdgeInsets.symmetric(horizontal: 10),
-
-              height: 55,
+               
               width: double.infinity,
 
-              decoration: BoxDecoration(
-                color: Colors.lightGreenAccent,
-                borderRadius:
-                    BorderRadius.circular(30),
-              ),
+              child: ElevatedButton(
+                onPressed: () {
+                  // View On Route Map button
+                },
 
-              child: const Center(
-                child: Text(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.lightGreenAccent,
+                  foregroundColor: Colors.green,
+                  minimumSize: const Size(double.infinity, 55),
+
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+
+                  elevation: 0,
+                ),
+
+                child: const Text(
                   'View On Route Map',
 
                   style: TextStyle(
@@ -666,51 +675,109 @@ class _TripdetailsState extends State<Tripdetails> {
 
             const SizedBox(height: 50),
 
-            // Grand Total
+            // Grand Total + Proceed to Booking
             Container(
               width: double.infinity,
 
               padding: const EdgeInsets.all(15),
 
-              child: Column(
-                crossAxisAlignment:
-                    CrossAxisAlignment.start,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
 
                 children: [
 
-                  const Text(
-                    'GRAND TOTAL',
+                  // Grand Total
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
 
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                      letterSpacing: 1,
-                    ),
+                    children: [
+
+                      const Text(
+                        'GRAND TOTAL',
+
+                        style: TextStyle(
+                          fontSize: 8,
+                          color: Colors.grey,
+                          letterSpacing: 1,
+                        ),
+                      ),
+
+                      const SizedBox(height: 2),
+
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 5,
+                        ),
+
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.black,
+                          ),
+                        ),
+
+                        child: const Text(
+                          '₹ 5000',
+
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 2, 7, 109),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
 
-                  const SizedBox(height: 5),
+                  const SizedBox(width: 17),
 
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 7,
-                    ),
+                  // Proceed to Booking Button
+                  Expanded(
+                    child: SizedBox(
+                      height: 40,
 
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black,
-                      ),
-                    ),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // Proceed to booking
+                        },
 
-                    child: const Text(
-                      '₹ 5000',
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(255, 55, 43, 190),
 
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight:
-                            FontWeight.bold,
-                        color: Color.fromARGB(255, 2, 7, 109),
+                          foregroundColor: Colors.white,
+
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(7),
+                          ),
+
+
+                          ),
+                        
+
+                        child: Row(
+                          mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
+
+                          children: [
+
+                            const Text(
+                              'Proceed to booking',
+
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+
+                            const Icon(
+                              Icons.chevron_right,
+                              color: Colors.white,
+                              size: 22,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
