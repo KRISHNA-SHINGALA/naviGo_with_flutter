@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class CancelRequest extends StatefulWidget {
@@ -41,202 +40,193 @@ class _CancelRequestState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Passenagers & Requests',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: false,      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(8),
 
-          child: Column(
-            children: [
-              for (final refund in refunds)
-                Card(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  elevation: 0,
-                  color: const Color(0xFFD8E3FF),
+        child: Column(
+          children: [
 
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+            for (final refund in refunds)
 
-                  child: Padding(
-                    padding: const EdgeInsets.all(15),
+              Card(
+                margin: const EdgeInsets.only(bottom: 10),
+                elevation: 0,
+                color: const Color(0xFFD8E3FF),
 
-                    child: Column(
-                      crossAxisAlignment:
-                          CrossAxisAlignment.start,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
 
-                      children: [
-                        // Name and phone number
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.person,
-                              color: Color(0xFF0047AB),
-                              size: 22,
-                            ),
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
 
-                            const SizedBox(width: 25),
+                  child: Column(
+                    crossAxisAlignment:
+                        CrossAxisAlignment.start,
 
-                            Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  refund['name']!,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
+                    children: [
 
-                                Text(
-                                  refund['number']!,
-                                  style: const TextStyle(
-                                    fontSize: 10,
-                                    color: Colors.blueGrey,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                      Row(
+                        children: [
 
-                        const SizedBox(height: 15),
+                          const Icon(
+                            Icons.person,
+                            color: Color(0xFF0047AB),
+                            size: 22,
+                          ),
 
-                        // Place and seats
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.map_outlined,
-                              size: 14,
-                              color: Color(0xFF0047AB),
-                            ),
+                          const SizedBox(width: 25),
 
-                            const SizedBox(width: 15),
+                          Column(
+                            crossAxisAlignment:
+                                CrossAxisAlignment.start,
 
-                            Expanded(
-                              child: Text(
-                                refund['place']!,
+                            children: [
+
+                              Text(
+                                refund['name']!,
                                 style: const TextStyle(
-                                  fontSize: 11,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
                                   color: Colors.black,
                                 ),
                               ),
-                            ),
-
-                            const SizedBox(width: 5),
-
-                            Container(
-                              padding: const EdgeInsets.all(5),
-
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.circular(4),
-                              ),
-
-                              child: Text(
-                                refund['seat']!,
-                                style: const TextStyle(
-                                  fontSize: 9,
-                                  color: Color(0xFF0047AB),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        const SizedBox(height: 15),
-
-                        // Pending refund status
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 5,
-                          ),
-
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFFFDCD9),
-                            borderRadius:
-                                BorderRadius.circular(20),
-                          ),
-
-                          child: const Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.circle,
-                                size: 6,
-                                color: Colors.red,
-                              ),
-
-                              SizedBox(width: 8),
 
                               Text(
-                                'PENDING REFUND',
-                                style: TextStyle(
-                                  fontSize: 8,
-                                  color: Colors.red,
+                                refund['number']!,
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.blueGrey,
                                 ),
                               ),
                             ],
                           ),
-                        ),
+                        ],
+                      ),
 
-                        const SizedBox(height: 18),
+                      const SizedBox(height: 15),
 
-                        // Refund amount
-                        Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
+                      Row(
+                        children: [
 
-                          children: [
-                            const Text(
-                              'Refund Amount:',
-                              style: TextStyle(
+                          const Icon(
+                            Icons.map_outlined,
+                            size: 14,
+                            color: Color(0xFF0047AB),
+                          ),
+
+                          const SizedBox(width: 15),
+
+                          Expanded(
+                            child: Text(
+                              refund['place']!,
+                              style: const TextStyle(
                                 fontSize: 11,
-                                color: Colors.black54,
+                                color: Colors.black,
                               ),
                             ),
+                          ),
+
+                          const SizedBox(width: 5),
+
+                          Container(
+                            padding: const EdgeInsets.all(5),
+
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.circular(4),
+                            ),
+
+                            child: Text(
+                              refund['seat']!,
+                              style: const TextStyle(
+                                fontSize: 9,
+                                color: Color(0xFF0047AB),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 15),
+
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 5,
+                        ),
+
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFFDCD9),
+                          borderRadius:
+                              BorderRadius.circular(20),
+                        ),
+
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+
+                            Icon(
+                              Icons.circle,
+                              size: 6,
+                              color: Colors.red,
+                            ),
+
+                            SizedBox(width: 8),
 
                             Text(
-                              refund['amount']!,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
+                              'PENDING REFUND',
+                              style: TextStyle(
+                                fontSize: 8,
+                                color: Colors.red,
                               ),
                             ),
                           ],
                         ),
+                      ),
 
-                        const SizedBox(height: 8),
+                      const SizedBox(height: 18),
 
-                        // Refund reason
-                        Text(
-                          'Reason: ${refund['reason']}',
-                          style: const TextStyle(
-                            fontSize: 11,
-                            color: Colors.black,
+                      Row(
+                        mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+
+                        children: [
+
+                          const Text(
+                            'Refund Amount:',
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: Colors.black54,
+                            ),
                           ),
+
+                          Text(
+                            refund['amount']!,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 8),
+
+                      Text(
+                        'Reason: ${refund['reason']}',
+                        style: const TextStyle(
+                          fontSize: 11,
+                          color: Colors.black,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-            ],
-          ),
+              ),
+          ],
         ),
       ),
     );
