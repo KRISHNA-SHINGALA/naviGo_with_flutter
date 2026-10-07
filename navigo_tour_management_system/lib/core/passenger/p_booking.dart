@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:navigo_tour_management_system/core/passenger/p_payment.dart';
 
 class Booking extends StatefulWidget {
   const Booking({super.key});
@@ -27,10 +28,15 @@ class _BookingState extends State<Booking> {
       backgroundColor: Colors.white,
 
       appBar: AppBar(
-        leading: const Icon(
-          Icons.arrow_back,
-          color: Color(0xFF003366),
-        ),
+        leading: IconButton(
+  icon: const Icon(
+    Icons.arrow_back,
+    color: Color(0xFF003366),
+  ),
+  onPressed: () {
+    Navigator.pop(context);
+  },
+),
 
         title: const Text(
           'Enter Details',
@@ -541,10 +547,14 @@ class _BookingState extends State<Booking> {
                         height: 40,
 
                         child: ElevatedButton(
-                          onPressed: () {
-                            // Processed button
-                          },
-
+                         onPressed: () {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const PaymentScreen(),
+    ),
+  );
+},
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
                                 const Color(0xFF372BBE),

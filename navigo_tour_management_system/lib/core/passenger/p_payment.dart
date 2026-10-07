@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:navigo_tour_management_system/core/passenger/passenger_eticket_screen.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});
@@ -22,7 +23,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: Colors.blue,
+            color:  Color(0xFF003366),
             size: 32,
           ),
 
@@ -487,10 +488,17 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 horizontal: 10,
               ),
 
-              child: ElevatedButton(
-                onPressed: () {
-                  // Confirm Booking
-                },
+             child: ElevatedButton(
+  onPressed: () {
+    if (selectedPaymentMethod == 'offline') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const PassengerETicketScreen(),
+        ),
+      );
+    }
+  },
 
                 style: ElevatedButton.styleFrom(
                   backgroundColor:
