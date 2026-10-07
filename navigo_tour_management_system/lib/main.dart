@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:navigo_tour_management_system/core/common/splash_screen.dart';
+import 'package:navigo_tour_management_system/core/passenger/p_dashboard.dart';
 //import 'package:navigo_tour_management_system/core/admin/a_activebooking&cancelreq.dart';
 // import 'package:navigo_tour_management_system/core/admin/a_dashboard.dart';
 // import 'package:navigo_tour_management_system/core/passenger/p_dashboard.dart';
@@ -22,7 +23,7 @@ class NaviGoApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const SplashScreen(), // Set the initial screen to LoginScreen
+      home: const PassDashboard(), // Set the initial screen to LoginScreen
     );
   }
 }
