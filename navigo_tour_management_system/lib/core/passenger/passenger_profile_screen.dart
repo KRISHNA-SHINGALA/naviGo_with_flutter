@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:navigo_tour_management_system/core/passenger/passenger_bottom_bar.dart';
+import 'package:navigo_tour_management_system/core/passenger/passenger_top_bar.dart';
 import 'passenger_edit_profile_screen.dart';
 // Note: Yahan apni Login Screen ki file import karna mat bhoolna, jaise niche likha hai:
 // import 'package:navigo_tour_management_system/core/auth/login_screen.dart'; 
@@ -13,6 +15,20 @@ class PassengerProfileScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
+
+      appBar: PreferredSize(
+  preferredSize: const Size.fromHeight(60.0), 
+  child: PassengerTopBar( // Yahan se 'const' hata diya hai
+    onProfileTap: () {
+      // Yahan aap profile page par navigate karne ka code likh sakte hain
+      // Example: Navigator.push(...);
+      print("Profile clicked!");
+    },
+  ),
+),
+bottomNavigationBar: const PassengerBottomBar(currentIndex: 0),
+
+
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),

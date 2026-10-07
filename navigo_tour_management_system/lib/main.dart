@@ -28,3 +28,7 @@ class NaviGoApp extends StatelessWidget {
     );
   }
 }
+
+
+
+//https://learn.allysoftsolutions.com/practicies/flutter-firestore-shopping-cart.html

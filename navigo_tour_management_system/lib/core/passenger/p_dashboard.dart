@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:navigo_tour_management_system/core/passenger/passenger_bottom_bar.dart';
 import 'package:navigo_tour_management_system/resources/colors.dart';
 import 'package:navigo_tour_management_system/resources/strings.dart';
 
@@ -20,6 +21,10 @@ class _PassDashboardState extends State<PassDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
+bottomNavigationBar: const PassengerBottomBar(currentIndex: 0),
+
+
 
       body: SafeArea(
         child: SingleChildScrollView(

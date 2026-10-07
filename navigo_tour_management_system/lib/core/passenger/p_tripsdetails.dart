@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:navigo_tour_management_system/core/passenger/passenger_bottom_bar.dart';
+import 'package:navigo_tour_management_system/core/passenger/passenger_top_bar.dart';
 
 class Tripdetails extends StatefulWidget {
   const Tripdetails({super.key});
@@ -14,6 +16,20 @@ class _TripdetailsState extends State<Tripdetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
+      appBar: PreferredSize(
+  preferredSize: const Size.fromHeight(60.0), 
+  child: PassengerTopBar( // Yahan se 'const' hata diya hai
+    onProfileTap: () {
+      // Yahan aap profile page par navigate karne ka code likh sakte hain
+      // Example: Navigator.push(...);
+      print("Profile clicked!");
+    },
+  ),
+),
+
+bottomNavigationBar: const PassengerBottomBar(currentIndex: 0),
+
 
       body: SingleChildScrollView(
         child: Column(
