@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:navigo_tour_management_system/core/admin/a_dashboard.dart';
 import 'package:navigo_tour_management_system/core/auth/a_forgot_pass.dart';
 
 class AdminLogin extends StatefulWidget {
@@ -125,6 +126,17 @@ class _AdminLoginState extends State<AdminLogin> {
                 ),
                 elevation: 0,
               ),
+              
+              child: GestureDetector(
+                      onTap: () {
+                        // Ye code aapko Register page par bhej dega
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const AdminDashboard()),
+                        );
+                      },
+                    
+              
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -146,6 +158,7 @@ class _AdminLoginState extends State<AdminLogin> {
               ),
             ),
           ),
+          )
         ],
       ),
     );

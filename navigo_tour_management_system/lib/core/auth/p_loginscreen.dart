@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:navigo_tour_management_system/core/auth/p_forgot_pass.dart';
+import 'package:navigo_tour_management_system/core/passenger/p_dashboard.dart';
 
 class PassengerLogin extends StatefulWidget {
   const PassengerLogin({super.key});
@@ -125,6 +126,16 @@ class _PassengerLoginState extends State<PassengerLogin> {
                 ),
                 elevation: 0,
               ),
+
+              child: GestureDetector(
+                      onTap: () {
+                        // Ye code aapko Register page par bhej dega
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const PassDashboard()),
+                        );
+                      },
+
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -146,6 +157,7 @@ class _PassengerLoginState extends State<PassengerLogin> {
               ),
             ),
           ),
+          )
         ],
       ),
     );
