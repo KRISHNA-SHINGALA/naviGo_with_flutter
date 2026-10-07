@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:navigo_tour_management_system/core/auth/p_loginscreen.dart';
 import 'package:navigo_tour_management_system/core/auth/a_loginscreen.dart';
+import 'package:navigo_tour_management_system/core/auth/register.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -176,10 +177,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: TextStyle(fontSize: 14, color: Colors.grey),
                     ),
                     const SizedBox(width: 4),
+                    // LoginScreen ke andar Sign Up button ka hissa:
                     GestureDetector(
                       onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Sign Up page")),
+                        // Ye code aapko Register page par bhej dega
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const RegisterScreen()),
                         );
                       },
                       child: const Text(
@@ -190,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Color(0xFF0056D2),
                         ),
                       ),
-                    ),
+                    )
                   ],
                 ),
                 const SizedBox(height: 20),
