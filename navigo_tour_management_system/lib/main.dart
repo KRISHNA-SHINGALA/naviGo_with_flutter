@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:navigo_tour_management_system/core/common/splash_screen.dart';
 //import 'package:navigo_tour_management_system/core/admin/a_activebooking&cancelreq.dart';
