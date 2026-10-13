@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:navigo_tour_management_system/core/admin/a_create_trip.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
@@ -122,19 +123,24 @@ class _AdminDashboardState extends State<AdminDashboard> {
       // ADD TRIP CIRCLE BUTTON
       // ============================================================
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add Trip action will be connected later.
-        },
-        backgroundColor: const Color(0xFF2626E8),
-        elevation: 3,
-        shape: const CircleBorder(),
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-          size: 28,
-        ),
+floatingActionButton: FloatingActionButton(
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AdminCreateTrip(),
       ),
+    );
+  },
+  backgroundColor: const Color(0xFF2626E8),
+  elevation: 3,
+  shape: const CircleBorder(),
+  child: const Icon(
+    Icons.add,
+    color: Colors.white,
+    size: 28,
+  ),
+),
     );
   }
 
