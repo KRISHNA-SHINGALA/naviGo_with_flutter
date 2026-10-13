@@ -47,7 +47,9 @@ class _AdminCreateTripState extends State<AdminCreateTrip> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Unable to select the photo. Please try again.'),
+          content: Text(
+            'Unable to select the photo. Please try again.',
+          ),
         ),
       );
     } finally {
@@ -224,7 +226,9 @@ class _AdminCreateTripState extends State<AdminCreateTrip> {
                           size: 17,
                         ),
                   label: Text(
-                    _isPickingImage ? 'Selecting Photo...' : 'Change Photo',
+                    _isPickingImage
+                        ? 'Selecting Photo...'
+                        : 'Change Photo',
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
@@ -248,17 +252,27 @@ class _AdminCreateTripState extends State<AdminCreateTrip> {
                 width: double.infinity,
                 height: 40,
                 child: ElevatedButton(
-                 onPressed: () {
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => const AdminMapView(),
-    ),
-  );
-},
-                  child: Row(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AdminMapView(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: Colors.white,
+                    disabledBackgroundColor: AppColors.primary,
+                    disabledForegroundColor: Colors.white,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(22),
+                    ),
+                  ),
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Text(
                         'Next: Map Route',
                         style: TextStyle(

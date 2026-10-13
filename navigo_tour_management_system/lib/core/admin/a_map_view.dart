@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:navigo_tour_management_system/resources/colors.dart';
+import 'package:navigo_tour_management_system/core/admin/a_trip_details.dart';
 
 class AdminMapView extends StatelessWidget {
   const AdminMapView({super.key});
@@ -117,44 +118,43 @@ class AdminMapView extends StatelessWidget {
 
               const SizedBox(height: 14),
 
-              // ==================================================
-              // PROCEED BUTTON
-              // ==================================================
 
-              SizedBox(
-                width: double.infinity,
+// ==================================================
+// PROCEED BUTTON
+// ==================================================
 
-                height: 40,
+SizedBox(
+  width: double.infinity,
+  height: 40,
+  child: ElevatedButton(
+    onPressed: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const AdminTripDetails(),
+        ),
+      );
+    },
+    style: ElevatedButton.styleFrom(
+      backgroundColor: AppColors.primary,
+      foregroundColor: Colors.white,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+    ),
+    child: const Text(
+      'Proceed',
+      style: TextStyle(
+        fontSize: 11,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+  ),
+),
 
-                child: ElevatedButton(
-                  onPressed: () {},
+const SizedBox(height: 10),
 
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        AppColors.primary,
-
-                    foregroundColor:
-                        Colors.white,
-
-                    elevation: 0,
-
-                    shape:
-                        RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(8),
-                    ),
-                  ),
-
-                  child: const Text(
-                    'Proceed',
-
-                    style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ),
 
               const SizedBox(height: 10),
             ],
