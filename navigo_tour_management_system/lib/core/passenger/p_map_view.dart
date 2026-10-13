@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:navigo_tour_management_system/core/passenger/passenger_bottom_bar.dart';
 import 'package:navigo_tour_management_system/core/passenger/passenger_top_bar.dart';
 import 'package:navigo_tour_management_system/resources/colors.dart';
+import 'package:navigo_tour_management_system/core/passenger/p_tripsdetails.dart';
 
 class PassengerMapView extends StatelessWidget {
   const PassengerMapView({super.key});
@@ -127,7 +128,14 @@ bottomNavigationBar: const PassengerBottomBar(currentIndex: 0),
                 width: double.infinity,
                 height: 40,
                 child: ElevatedButton(
-                  onPressed: () {},
+                onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Tripdetails(),
+                      ),
+                    );
+                  },
 
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,

@@ -4,6 +4,7 @@ import 'package:navigo_tour_management_system/resources/colors.dart';
 import 'package:navigo_tour_management_system/resources/image.dart';
 import 'package:navigo_tour_management_system/core/admin/a_map_view.dart';
 import 'package:navigo_tour_management_system/core/admin/a_create_trip.dart';
+import 'package:navigo_tour_management_system/core/admin/a_dashboard.dart';
 
 class AdminTripDetails extends StatelessWidget {
   const AdminTripDetails({super.key});
@@ -64,16 +65,14 @@ class AdminTripDetails extends StatelessWidget {
 
     if (confirmed != true || !context.mounted) return;
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(
-          'Trip cancellation confirmed. Connect your database '
-          'to save this change permanently.',
-        ),
+    // Redirect to Admin Dashboard and clear previous screens.
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const AdminDashboard(),
       ),
+      (route) => false,
     );
-
-    Navigator.pop(context);
   }
 
   @override
@@ -86,6 +85,7 @@ class AdminTripDetails extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // TRIP COVER IMAGE
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.asset(
@@ -98,6 +98,7 @@ class AdminTripDetails extends StatelessWidget {
 
               const SizedBox(height: 10),
 
+              // TRIP NAME
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 6),
                 child: Text(
@@ -112,6 +113,7 @@ class AdminTripDetails extends StatelessWidget {
 
               const SizedBox(height: 6),
 
+              // TRIP DATE
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 6),
                 child: Row(
@@ -135,6 +137,7 @@ class AdminTripDetails extends StatelessWidget {
 
               const SizedBox(height: 10),
 
+              // VIEW ROUTE BUTTON
               SizedBox(
                 width: double.infinity,
                 height: 28,
@@ -147,7 +150,10 @@ class AdminTripDetails extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: const Icon(Icons.map_outlined, size: 13),
+                  icon: const Icon(
+                    Icons.map_outlined,
+                    size: 13,
+                  ),
                   label: const Text(
                     'View Route',
                     style: TextStyle(
@@ -171,6 +177,7 @@ class AdminTripDetails extends StatelessWidget {
 
               const SizedBox(height: 20),
 
+              // BOOKED PASSENGERS
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -241,6 +248,7 @@ class AdminTripDetails extends StatelessWidget {
 
               const SizedBox(height: 16),
 
+              // EDIT TRIP BUTTON
               SizedBox(
                 width: double.infinity,
                 height: 28,
@@ -253,7 +261,10 @@ class AdminTripDetails extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: const Icon(Icons.edit_outlined, size: 12),
+                  icon: const Icon(
+                    Icons.edit_outlined,
+                    size: 12,
+                  ),
                   label: const Text(
                     'Edit Trip',
                     style: TextStyle(
@@ -277,12 +288,16 @@ class AdminTripDetails extends StatelessWidget {
 
               const SizedBox(height: 8),
 
+              // CANCEL TRIP BUTTON
               SizedBox(
                 width: double.infinity,
                 height: 28,
                 child: OutlinedButton.icon(
                   onPressed: () => _confirmCancelTrip(context),
-                  icon: const Icon(Icons.cancel_outlined, size: 12),
+                  icon: const Icon(
+                    Icons.cancel_outlined,
+                    size: 12,
+                  ),
                   label: const Text(
                     'Cancel Trip',
                     style: TextStyle(
@@ -312,6 +327,7 @@ class AdminTripDetails extends StatelessWidget {
     );
   }
 
+  // PASSENGER CARD
   Widget _buildPassengerCard(
     BuildContext context, {
     required String name,
