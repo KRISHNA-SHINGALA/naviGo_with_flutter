@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:navigo_tour_management_system/core/passenger/p_payment.dart';
+import 'p_tripsdetails.dart';
 
 class Booking extends StatefulWidget {
   const Booking({super.key});
@@ -27,28 +28,31 @@ class _BookingState extends State<Booking> {
     return Scaffold(
       backgroundColor: Colors.white,
 
-      appBar: AppBar(
-        leading: IconButton(
-  icon: const Icon(
-    Icons.arrow_back,
-    color: Color(0xFF003366),
-  ),
-  onPressed: () {
-    Navigator.pop(context);
-  },
-),
-
-        title: const Text(
-          'Enter Details',
-          style: TextStyle(
-            color: Color(0xFF003366),
-            fontWeight: FontWeight.bold,
-          ),
+    appBar: AppBar(
+  leading: IconButton(
+    icon: const Icon(
+      Icons.arrow_back,
+      color: Color(0xFF003366),
+    ),
+    onPressed: () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const Tripdetails(),
         ),
-
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
+      );
+    },
+  ),
+  title: const Text(
+    'Enter Details',
+    style: TextStyle(
+      color: Color(0xFF003366),
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+  backgroundColor: Colors.white,
+  elevation: 0,
+),
 
       body: SingleChildScrollView(
         child: Padding(
