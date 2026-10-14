@@ -1,12 +1,15 @@
-
 import 'package:flutter/material.dart';
-import 'package:navigo_tour_management_system/resources/colors.dart';
-import 'package:navigo_tour_management_system/resources/image.dart';
-
-import 'package:navigo_tour_management_system/core/passenger/p_booking.dart';
-import 'package:navigo_tour_management_system/core/passenger/p_explore_trips.dart';
 import 'package:navigo_tour_management_system/core/passenger/passenger_bottom_bar.dart';
-import 'package:navigo_tour_management_system/core/passenger/passenger_profile_screen.dart';
+import 'package:navigo_tour_management_system/core/passenger/passenger_top_bar.dart';
+import 'package:navigo_tour_management_system/resources/colors.dart';
+import 'package:navigo_tour_management_system/resources/strings.dart';
+import 'passenger_profile_screen.dart'; // Profile Screen Import
+
+class AppImages {
+  static const String mahakaleshwar = 'assets/images/mahakaleshwar.jpg';
+  static const String solangValley = 'assets/images/solang_valley.jpg';
+  static const String jaswantThada = 'assets/images/jaswant_thada.jpg';
+}
 
 class PassDashboard extends StatefulWidget {
   const PassDashboard({super.key});
@@ -16,418 +19,130 @@ class PassDashboard extends StatefulWidget {
 }
 
 class _PassDashboardState extends State<PassDashboard> {
-  final TextEditingController _searchController = TextEditingController();
-  String _searchQuery = '';
-
-  final List<Map<String, String>> _destinations = [
-    {
-      'image': AppImages.mahakaleshwar,
-      'title': 'Mahakaleshwar, Ujjain',
-      'description':
-          'a famous Hindu shrine, the only south-facing Jyotirl...',
-    },
-    {
-      'image': AppImages.solangValley,
-      'title': 'Solang Valley, Manali',
-      'description':
-          'a famous adventure and nature destination located...',
-    },
-    {
-      'image': AppImages.jaswantThada,
-      'title': 'Jaswant Thada, Rajasthan',
-      'description':
-          'a stunning white marble cenotaph built in 1899 by...',
-    },
-  ];
-
-  List<Map<String, String>> get _filteredDestinations {
-    final query = _searchQuery.trim().toLowerCase();
-
-    if (query.isEmpty) {
-      return _destinations;
-    }
-
-    return _destinations.where((destination) {
-      final title = destination['title']!.toLowerCase();
-      final description = destination['description']!.toLowerCase();
-
-      return title.contains(query) || description.contains(query);
-    }).toList();
-  }
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
-
-  void _openExploreTrips() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const PassengerExploreTrips(),
-      ),
-    );
-  }
-
-  void _openProfile() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const PassengerProfileScreen(),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-
-      // Existing passenger bottom navigation bar.
-      bottomNavigationBar: const PassengerBottomBar(
-        currentIndex: 0,
+      backgroundColor: Colors.white,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(80.0), 
+        child: SafeArea(
+          child: PassengerTopBar(
+            onProfileTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const PassengerProfileScreen()),
+              );
+            },
+          ),
+        ),
       ),
-
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(12, 8, 12, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Welcome text and profile icon.
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Welcome back,',
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: AppColors.textSecondary,
-                          ),
-                        ),
-                        SizedBox(height: 2),
-                        Text(
-                          'Hello, Krisha!',
-                          style: TextStyle(
-                            fontSize: 19,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.primary,
-                          ),
-                        ),
-                      ],
-                    ),
+      bottomNavigationBar: const PassengerBottomBar(currentIndex: 0), // Index 0 for Home
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // SEARCH
+            const SizedBox(height: 5),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: SizedBox(
+                height: 42,
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: AppStrings.searchDestination,
+                    hintStyle: const TextStyle(fontSize: 14, color: AppColors.textSecondary),
+                    prefixIcon: const Icon(Icons.search, size: 21, color: AppColors.textSecondary),
+                    filled: true,
+                    fillColor: AppColors.searchBackground,
+                    contentPadding: EdgeInsets.zero,
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide.none),
                   ),
-
-                  GestureDetector(
-                    onTap: _openProfile,
-                    child: Container(
-                      width: 30,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryLight,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: AppColors.primary,
-                          width: 2,
-                        ),
-                      ),
-                      child: const Icon(
-                        Icons.person_outline,
-                        size: 19,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 16),
-
-              // Search field.
-              Container(
-                height: 36,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                  color: AppColors.primaryLight,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.search,
-                      size: 17,
-                      color: AppColors.textSecondary,
-                    ),
-                    const SizedBox(width: 7),
-                    Expanded(
-                      child: TextField(
-                        controller: _searchController,
-                        onChanged: (value) {
-                          setState(() {
-                            _searchQuery = value;
-                          });
-                        },
-                        onSubmitted: (_) => _openExploreTrips(),
-                        decoration: const InputDecoration(
-                          hintText: 'Where do you want to go?',
-                          hintStyle: TextStyle(
-                            fontSize: 11,
-                            color: AppColors.textSecondary,
-                          ),
-                          border: InputBorder.none,
-                          isDense: true,
-                          contentPadding: EdgeInsets.zero,
-                        ),
-                        style: const TextStyle(
-                          fontSize: 11,
-                          color: AppColors.textPrimary,
-                        ),
-                        textInputAction: TextInputAction.search,
-                      ),
-                    ),
-                    if (_searchQuery.isNotEmpty)
-                      GestureDetector(
-                        onTap: () {
-                          _searchController.clear();
-                          setState(() {
-                            _searchQuery = '';
-                          });
-                        },
-                        child: const Icon(
-                          Icons.close,
-                          size: 16,
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                  ],
                 ),
               ),
-
-              const SizedBox(height: 18),
-
-              // Upcoming tours heading.
-              Row(
+            ),
+            // UPCOMING TOURS
+            const SizedBox(height: 19),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Upcoming Tours',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
-                    ),
+                  const Text(AppStrings.upcomingTours, style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
+                  Text(AppStrings.viewAll, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.primary)),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+            // TOUR CARDS
+            SizedBox(
+              height: 220,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                children: [
+                  _buildTourCard(
+                    image: AppImages.mahakaleshwar, title: AppStrings.mahakaleshwar,
+                    duration: AppStrings.fourDays, description: AppStrings.mahakaleshwarDescription,
+                    price: AppStrings.mahakaleshwarPrice,
                   ),
-                  GestureDetector(
-                    onTap: _openExploreTrips,
-                    child: const Text(
-                      'View all',
-                      style: TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.primary,
-                      ),
-                    ),
+                  const SizedBox(width: 10),
+                  _buildTourCard(
+                    image: AppImages.solangValley, title: AppStrings.solangValley,
+                    duration: AppStrings.sevenDays, description: AppStrings.solangValleyDescription,
+                    price: AppStrings.solangValleyPrice,
                   ),
                 ],
               ),
-
-              const SizedBox(height: 10),
-
-              // Upcoming tour cards.
-              SizedBox(
-                height: 180,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: _buildUpcomingTour(
-                        image: AppImages.mahakaleshwar,
-                        title: 'Mahakaleshwar, Ujjain',
-                        days: '4 days',
-                        description: 'Private tour & villa stay.',
-                        price: '₹ 5000',
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: _buildUpcomingTour(
-                        image: AppImages.solangValley,
-                        title: 'Solang Valley, Manali',
-                        days: '7 Days',
-                        description: 'All-Terrain Vehicle (ATV)',
-                        price: '₹ 10000',
-                      ),
-                    ),
-                  ],
-                ),
+            ),
+            // POPULAR DESTINATIONS
+            const SizedBox(height: 15),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(AppStrings.popularDestinations, style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
+                  Text(AppStrings.viewAll, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.primary)),
+                ],
               ),
-
-              const SizedBox(height: 14),
-
-              const Text(
-                'Popular Destinations',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-
-              const SizedBox(height: 10),
-
-              if (_filteredDestinations.isEmpty)
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  child: Center(
-                    child: Text(
-                      'No destinations found.',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-                  ),
-                )
-              else
-                ..._filteredDestinations.map((destination) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: GestureDetector(
-                      onTap: _openExploreTrips,
-                      child: _buildPopularDestination(
-                        image: destination['image']!,
-                        title: destination['title']!,
-                        description: destination['description']!,
-                      ),
-                    ),
-                  );
-                }),
-            ],
-          ),
+            ),
+            const SizedBox(height: 10),
+            _buildDestinationCard(image: AppImages.mahakaleshwar, title: AppStrings.mahakaleshwar, description: AppStrings.mahakaleshwarPopularDescription),
+            const SizedBox(height: 9),
+            _buildDestinationCard(image: AppImages.solangValley, title: AppStrings.solangValley, description: AppStrings.solangValleyPopularDescription),
+            const SizedBox(height: 9),
+            _buildDestinationCard(image: AppImages.jaswantThada, title: AppStrings.jaswantThada, description: AppStrings.jaswantThadaDescription),
+            const SizedBox(height: 20),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildUpcomingTour({
-    required String image,
-    required String title,
-    required String days,
-    required String description,
-    required String price,
-  }) {
+  Widget _buildTourCard({required String image, required String title, required String duration, required String description, required String price}) {
     return Container(
-      decoration: BoxDecoration(
-        color: AppColors.background,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppColors.border),
-      ),
+      width: 230,
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), border: Border.all(color: const Color(0xFFD5D5D5))),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(
-              top: Radius.circular(8),
-            ),
-            child: Image.asset(
-              image,
-              width: double.infinity,
-              height: 86,
-              fit: BoxFit.cover,
-            ),
-          ),
+          ClipRRect(borderRadius: const BorderRadius.vertical(top: Radius.circular(10)), child: Image.asset(image, width: double.infinity, height: 105, fit: BoxFit.cover)),
           Padding(
-            padding: const EdgeInsets.fromLTRB(7, 5, 7, 5),
+            padding: const EdgeInsets.fromLTRB(9, 6, 9, 6),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                const SizedBox(height: 3),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 7,
-                    vertical: 2,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryLight,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text(
-                    days,
-                    style: const TextStyle(
-                      fontSize: 8,
-                      color: AppColors.primary,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  description,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 8,
-                    color: AppColors.textSecondary,
-                  ),
-                ),
-                const SizedBox(height: 3),
+                Text(title, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
+                const SizedBox(height: 5),
+                Row(children: [const Icon(Icons.calendar_today_outlined, size: 12, color: AppColors.textSecondary), const SizedBox(width: 4), Text(duration, style: const TextStyle(fontSize: 11, color: AppColors.textSecondary))]),
+                const SizedBox(height: 5),
+                Text(description, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 10, color: AppColors.textSecondary)),
+                const SizedBox(height: 6),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Flexible(
-                      child: Text(
-                        price,
-                        style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.primary,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 27,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Booking(),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primary,
-                          foregroundColor: Colors.white,
-                          elevation: 0,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 18,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                        ),
-                        child: const Text(
-                          'Book',
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
+                    Text(price, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primary)),
+                    SizedBox(height: 30, child: ElevatedButton(onPressed: () {}, style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, foregroundColor: Colors.white, elevation: 0, padding: const EdgeInsets.symmetric(horizontal: 18), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))), child: const Text('Book', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500)))),
                   ],
                 ),
               ],
@@ -438,74 +153,14 @@ class _PassDashboardState extends State<PassDashboard> {
     );
   }
 
-  Widget _buildPopularDestination({
-    required String image,
-    required String title,
-    required String description,
-  }) {
+  Widget _buildDestinationCard({required String image, required String title, required String description}) {
     return Container(
-      width: double.infinity,
-      height: 64,
-      padding: const EdgeInsets.all(6),
-      decoration: BoxDecoration(
-        color: AppColors.background,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppColors.border),
-      ),
+      margin: const EdgeInsets.symmetric(horizontal: 18), height: 82,
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(9), border: Border.all(color: const Color(0xFFD4D4D4))),
       child: Row(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(6),
-            child: Image.asset(
-              image,
-              width: 58,
-              height: 52,
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                const SizedBox(height: 3),
-                Text(
-                  description,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 8,
-                    color: AppColors.textSecondary,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 4),
-          Container(
-            width: 20,
-            height: 20,
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColors.border),
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.chevron_right,
-              size: 15,
-              color: AppColors.textSecondary,
-            ),
-          ),
+          Padding(padding: const EdgeInsets.all(6), child: ClipRRect(borderRadius: BorderRadius.circular(6), child: Image.asset(image, width: 68, height: 68, fit: BoxFit.cover))),
+          Expanded(child: Padding(padding: const EdgeInsets.fromLTRB(6, 8, 8, 8), child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: [Text(title, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textPrimary)), const SizedBox(height: 4), Text(description, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 10, height: 1.25, color: AppColors.textSecondary))]))),
         ],
       ),
     );
