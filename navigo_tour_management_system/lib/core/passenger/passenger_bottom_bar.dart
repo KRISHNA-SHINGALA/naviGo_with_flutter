@@ -12,12 +12,11 @@ class PassengerBottomBar extends StatelessWidget {
   const PassengerBottomBar({super.key, required this.currentIndex});
 
   void _onItemTapped(BuildContext context, int index) {
-    // Agar user usi tab par click kare jo open hai, toh kuch mat karo
+    // Agar user usi tab par click kare jo already open hai, toh kuch mat karo
     if (currentIndex == index) return;
 
     Widget nextScreen;
 
-    // Yahan index ke hisaab se screen set ho rahi hai
     switch (index) {
       case 0:
         nextScreen = const PassDashboard();
@@ -38,7 +37,7 @@ class PassengerBottomBar extends StatelessWidget {
         return;
     }
 
-    // pushReplacement se purana page hat jayega aur naya page bina animation ke redirect hoga
+    // pushReplacement se previous page hat jayega aur naya page bina animation ke redirect hoga
     Navigator.pushReplacement(
       context,
       PageRouteBuilder(
