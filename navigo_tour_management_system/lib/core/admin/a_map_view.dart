@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:navigo_tour_management_system/resources/colors.dart';
-import 'package:navigo_tour_management_system/core/admin/a_trip_details.dart';
+import 'a_trip_details.dart'; // Trip details import
 
 class AdminMapView extends StatelessWidget {
   const AdminMapView({super.key});
@@ -8,210 +7,56 @@ class AdminMapView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(20, 40, 20, 80),
-
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-
-            children: [
-
-              const SizedBox(height: 16),
-
-              // ==================================================
-              // MAP
-              // ==================================================
-
-              Container(
-                width: double.infinity,
-
-                height: 500,
-
-                decoration: BoxDecoration(
-                  color: AppColors.searchBackground,
-
-                  borderRadius:
-                      BorderRadius.circular(10),
-
-                  border: Border.all(
-                    color: AppColors.border,
-                    width: 1,
-                  ),
-                ),
-
-                clipBehavior:
-                    Clip.antiAlias,
-
-                child: Image.asset(
-                  'assets/images/Admin_map.png',
-                  fit: BoxFit.cover,
-                ),
-              ),
-
-              const SizedBox(height: 16),
-
-              // ==================================================
-              // ROUTE ANALYSIS
-              // ==================================================
-
-              const Text(
-                'ROUTE ANALYSIS',
-
-                style: TextStyle(
-                  fontSize: 9,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.textSecondary,
-                ),
-              ),
-
-              const SizedBox(height: 4),
-
-              const Text(
-                'Total Distance:',
-
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-
-              const Text(
-                '882 km',
-
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.primary,
-                ),
-              ),
-
-              const SizedBox(height: 12),
-
-              // ==================================================
-              // INFORMATION BOXES
-              // ==================================================
-
-              Row(
-                children: [
-
-                  Expanded(
-                    child: _buildInfoBox(
-                      title: 'Estimated Time',
-                      value: '15 Hours 22 min',
-                    ),
-                  ),
-
-                  const SizedBox(width: 10),
-
-                  Expanded(
-                    child: _buildInfoBox(
-                      title: 'Avg',
-                      value: '56 km/h',
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 14),
-
-
-// ==================================================
-// PROCEED BUTTON
-// ==================================================
-
-SizedBox(
-  width: double.infinity,
-  height: 40,
-  child: ElevatedButton(
-    onPressed: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const AdminTripDetails(),
-        ),
-      );
-    },
-    style: ElevatedButton.styleFrom(
-      backgroundColor: AppColors.primary,
-      foregroundColor: Colors.white,
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text('Map View', style: TextStyle(color: Colors.black)),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
-    ),
-    child: const Text(
-      'Proceed',
-      style: TextStyle(
-        fontSize: 11,
-        fontWeight: FontWeight.w500,
-      ),
-    ),
-  ),
-),
-
-const SizedBox(height: 10),
-
-
-              const SizedBox(height: 10),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  // ==============================================================
-  // INFORMATION BOX
-  // ==============================================================
-
-  Widget _buildInfoBox({
-    required String title,
-    required String value,
-  }) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 10,
-        vertical: 9,
-      ),
-
-      decoration: BoxDecoration(
-        color: AppColors.searchBackground,
-
-        borderRadius:
-            BorderRadius.circular(8),
-      ),
-
-      child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
-
-        children: [
-
-          Text(
-            title,
-
-            style: const TextStyle(
-              fontSize: 9,
-              color: AppColors.textSecondary,
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Dummy Map Image
+            Container(
+              width: double.infinity,
+              height: 400,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.grey.shade200,
+                // Uncomment this and add map image in assets to show map
+                // image: DecorationImage(image: AssetImage('assets/images/Admin_map.png'), fit: BoxFit.cover),
+              ),
+              child: const Center(child: Text("Map Image Here")),
             ),
-          ),
+            const SizedBox(height: 20),
 
-          const SizedBox(height: 3),
+            // Route Analysis Data
+            const Text('ROUTE ANALYSIS', style: TextStyle(fontSize: 12, color: Colors.grey)),
+            const SizedBox(height: 5),
+            const Text('Total Distance: 882 km', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 15),
 
-          Text(
-            value,
-
-            style: const TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+            // Proceed Button
+            SizedBox(
+              width: double.infinity,
+              height: 45,
+              child: ElevatedButton(
+                onPressed: () {
+                  // Navigate to Trip Details page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const AdminTripDetails()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue.shade800),
+                child: const Text('Proceed', style: TextStyle(color: Colors.white)),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,10 +1,7 @@
-
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:navigo_tour_management_system/resources/colors.dart';
-import 'package:navigo_tour_management_system/core/admin/a_map_view.dart';
+import 'a_map_view.dart'; // Map view import
 
 class AdminCreateTrip extends StatefulWidget {
   const AdminCreateTrip({super.key});
@@ -14,344 +11,131 @@ class AdminCreateTrip extends StatefulWidget {
 }
 
 class _AdminCreateTripState extends State<AdminCreateTrip> {
+  // Image picker tools
   final ImagePicker _imagePicker = ImagePicker();
-
   Uint8List? _selectedImage;
-  bool _isPickingImage = false;
 
+  // Function to pick image from gallery
   Future<void> _changePhoto() async {
-    if (_isPickingImage) return;
-
-    setState(() {
-      _isPickingImage = true;
-    });
-
     try {
-      final XFile? image = await _imagePicker.pickImage(
-        source: ImageSource.gallery,
-        imageQuality: 85,
-        maxWidth: 1600,
-      );
-
+      final XFile? image = await _imagePicker.pickImage(source: ImageSource.gallery);
       if (image != null) {
         final Uint8List imageBytes = await image.readAsBytes();
-
-        if (!mounted) return;
-
         setState(() {
           _selectedImage = imageBytes;
         });
       }
     } catch (e) {
-      if (!mounted) return;
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Unable to select the photo. Please try again.',
-          ),
-        ),
-      );
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isPickingImage = false;
-        });
-      }
+      print("Error picking image: $e");
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(20, 40, 20, 80),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Trip Details',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.primary,
-                ),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text('Trip Details', style: TextStyle(color: Colors.black)),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.black),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Text Fields for Trip Details
+            _buildSimpleTextField('Trip Title', 'e.g. Alpine Grand Tour 2024'),
+            const SizedBox(height: 10),
+            _buildSimpleTextField('Origin City', 'Starting point'),
+            const SizedBox(height: 10),
+            _buildSimpleTextField('Destination City', 'Target destination'),
+            const SizedBox(height: 10),
+            
+            // Start and End Date row
+            Row(
+              children: [
+                Expanded(child: _buildSimpleTextField('Start Date', 'mm/dd/yyyy')),
+                const SizedBox(width: 10),
+                Expanded(child: _buildSimpleTextField('End Date', 'mm/dd/yyyy')),
+              ],
+            ),
+            const SizedBox(height: 10),
+            _buildSimpleTextField('Bus Type', 'Luxury Coach'),
+            const SizedBox(height: 10),
+            
+            // Seats and Price row
+            Row(
+              children: [
+                Expanded(child: _buildSimpleTextField('Total Seats', '0')),
+                const SizedBox(width: 10),
+                Expanded(child: _buildSimpleTextField('Price per Seat', '₹0.00')),
+              ],
+            ),
+            const SizedBox(height: 20),
+
+            // Image Preview Box
+            const Text('Trip Cover Preview', style: TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 10),
+            Container(
+              width: double.infinity,
+              height: 150,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade200,
+                borderRadius: BorderRadius.circular(10),
               ),
+              child: _selectedImage != null
+                  ? Image.memory(_selectedImage!, fit: BoxFit.cover)
+                  : const Center(child: Text('No photo selected')),
+            ),
+            const SizedBox(height: 10),
 
-              const SizedBox(height: 16),
+            // Change Photo Button
+            OutlinedButton.icon(
+              onPressed: _changePhoto,
+              icon: const Icon(Icons.image),
+              label: const Text('Change Photo'),
+            ),
+            const SizedBox(height: 30),
 
-              _buildTextField(
-                label: 'Trip Title',
-                hint: 'e.g. Alpine Grand Tour 2024',
-                icon: Icons.cancel_outlined,
+            // Next Button to go to Map Route
+            SizedBox(
+              width: double.infinity,
+              height: 45,
+              child: ElevatedButton(
+                onPressed: () {
+                  // Navigate to Map View Page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const AdminMapView()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue.shade800),
+                child: const Text('Next: Map Route', style: TextStyle(color: Colors.white)),
               ),
-
-              const SizedBox(height: 10),
-
-              _buildTextField(
-                label: 'Origin City',
-                hint: 'Starting point',
-                icon: Icons.location_on_outlined,
-              ),
-
-              const SizedBox(height: 10),
-
-              _buildTextField(
-                label: 'Destination City',
-                hint: 'Target destination',
-                icon: Icons.location_on_outlined,
-              ),
-
-              const SizedBox(height: 12),
-
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildTextField(
-                      label: 'Start Date',
-                      hint: 'mm/dd/yyyy',
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _buildTextField(
-                      label: 'End Date',
-                      hint: 'mm/dd/yyyy',
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 12),
-
-              _buildTextField(
-                label: 'Bus Type',
-                hint: 'Luxury Coach',
-                icon: Icons.directions_bus_outlined,
-              ),
-
-              const SizedBox(height: 12),
-
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildTextField(
-                      label: 'Total Seats',
-                      hint: '0',
-                      icon: Icons.event_seat_outlined,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _buildTextField(
-                      label: 'Price per Seat',
-                      hint: '₹0.00',
-                      icon: Icons.payments_outlined,
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 20),
-
-              const Text(
-                'Trip Cover Preview',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-
-              const SizedBox(height: 8),
-
-              Container(
-                width: double.infinity,
-                height: 120,
-                decoration: BoxDecoration(
-                  color: AppColors.searchBackground,
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(
-                    color: AppColors.border,
-                    width: 1,
-                  ),
-                ),
-                clipBehavior: Clip.antiAlias,
-                child: _selectedImage != null
-                    ? Image.memory(
-                        _selectedImage!,
-                        width: double.infinity,
-                        height: 120,
-                        fit: BoxFit.cover,
-                      )
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.image_outlined,
-                            size: 40,
-                            color: AppColors.textSecondary,
-                          ),
-                          const SizedBox(height: 8),
-                          const Text(
-                            'No photo selected',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: AppColors.textSecondary,
-                            ),
-                          ),
-                        ],
-                      ),
-              ),
-
-              const SizedBox(height: 10),
-
-              SizedBox(
-                width: double.infinity,
-                height: 40,
-                child: OutlinedButton.icon(
-                  onPressed: _isPickingImage ? null : _changePhoto,
-                  icon: _isPickingImage
-                      ? const SizedBox(
-                          width: 16,
-                          height: 16,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                          ),
-                        )
-                      : const Icon(
-                          Icons.edit,
-                          size: 17,
-                        ),
-                  label: Text(
-                    _isPickingImage
-                        ? 'Selecting Photo...'
-                        : 'Change Photo',
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: AppColors.primary,
-                    side: const BorderSide(
-                      color: AppColors.primary,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(7),
-                    ),
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
-              SizedBox(
-                width: double.infinity,
-                height: 40,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AdminMapView(),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: Colors.white,
-                    disabledBackgroundColor: AppColors.primary,
-                    disabledForegroundColor: Colors.white,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(22),
-                    ),
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Next: Map Route',
-                        style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Icon(
-                        Icons.arrow_forward,
-                        size: 17,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 10),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildTextField({
-    required String label,
-    required String hint,
-    IconData? icon,
-  }) {
+  // Simple method to create text inputs
+  Widget _buildSimpleTextField(String label, String hint) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w500,
-            color: AppColors.textPrimary,
-          ),
-        ),
+        Text(label, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
         const SizedBox(height: 5),
-        SizedBox(
-          height: 42,
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: hint,
-              hintStyle: const TextStyle(
-                fontSize: 12,
-                color: AppColors.textSecondary,
-              ),
-              prefixIcon: icon == null
-                  ? null
-                  : Icon(
-                      icon,
-                      size: 16,
-                      color: AppColors.textSecondary,
-                    ),
-              filled: true,
-              fillColor: AppColors.searchBackground,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 10,
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(7),
-                borderSide: BorderSide.none,
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(7),
-                borderSide: BorderSide.none,
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(7),
-                borderSide: const BorderSide(
-                  color: AppColors.primary,
-                  width: 1,
-                ),
-              ),
+        TextField(
+          decoration: InputDecoration(
+            hintText: hint,
+            filled: true,
+            fillColor: Colors.grey.shade100,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide.none,
             ),
           ),
         ),
