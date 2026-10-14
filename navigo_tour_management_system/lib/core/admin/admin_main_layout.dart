@@ -46,11 +46,12 @@ class _AdminMainLayoutState extends State<AdminMainLayout> {
         title: Row(
           children: [
             // NaviGo Logo Icon
-            const Icon(
-              Icons.analytics_outlined, // Agar aapke paas logo ka asset hai, toh Image.asset use karein
-              color: Color(0xFF0056D2),
-              size: 28,
-            ),
+Image.asset(
+  'assets/images/NaviGo_logo_only.png',
+  width: 35,
+  height: 40,
+  fit: BoxFit.contain,
+),
             const SizedBox(width: 8),
             // NaviGo Text
             const Text(

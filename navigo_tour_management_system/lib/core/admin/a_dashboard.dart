@@ -94,7 +94,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   );
                 },
                 child: _buildTripCard(
-                  'assets/images/spiti_valley.jpg', // Make sure this image exists
+                  'assets/images/spiti valley.jpg', // Make sure this image exists
                   'Spiti Valley',
                   'Nov 05 - Nov 12, 2026',
                   'ON TOUR',
