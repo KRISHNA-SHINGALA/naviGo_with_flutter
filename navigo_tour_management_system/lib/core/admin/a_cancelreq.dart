@@ -1,290 +1,96 @@
 import 'package:flutter/material.dart';
 
-class CancelRequest extends StatefulWidget {
+class CancelRequest extends StatelessWidget {
   const CancelRequest({super.key});
 
   @override
-  State<CancelRequest> createState() =>
-      _CancelRequestState();
-}
-
-class _CancelRequestState
-    extends State<CancelRequest> {
-
-  final refunds = [
-    {
-      'name': 'Garvi',
-      'number': '1234567890',
-      'place': 'Mahakaleshwar Temple',
-      'seat': '2 Seats',
-      'amount': '₹1500',
-      'reason': 'Medical emergency',
-    },
-    {
-      'name': 'Foram',
-      'number': '1234567890',
-      'place': 'Solang Valley, Manali',
-      'seat': '1 Seats',
-      'amount': '₹8200',
-      'reason': 'Scheduling Conflict',
-    },
-    {
-      'name': 'Bhoomi',
-      'number': '1234567890',
-      'place': 'Jaswant Thada, Rajasthan',
-      'seat': '4 Seats',
-      'amount': '₹4200',
-      'reason': 'Medical emergency',
-    },
-  ];
-
-  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return ListView(
+      padding: const EdgeInsets.all(20),
+      children: [
+        // List of cancellation refund requests
+        _buildRefundCard(context, 'Garvi', '1234567890', 'Mahakaleshwar Temple', '₹1500', 'Medical emergency'),
+        _buildRefundCard(context, 'Foram', '9876543210', 'Solang Valley, Manali', '₹8200', 'Scheduling Conflict'),
+      ],
+    );
+  }
+
+  // Simple widget for refund requests card
+  Widget _buildRefundCard(BuildContext context, String name, String phone, String place, String amount, String reason) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 15),
+      color: Colors.blue.shade50,
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Padding(
-        padding: const EdgeInsets.all(8),
-
+        padding: const EdgeInsets.all(15),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            for (final refund in refunds)
-
-              Card(
-                margin: const EdgeInsets.only(bottom: 10),
-                elevation: 0,
-                color: const Color(0xFFD8E3FF),
-
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+            // Passenger basic info
+            Row(
+              children: [
+                const Icon(Icons.person, color: Colors.blue),
+                const SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    Text(phone, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                  ],
                 ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            
+            // Trip place
+            Text('Trip: $place', style: const TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 10),
 
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-
-                  child: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start,
-
-                    children: [
-
-                      Row(
-                        children: [
-
-                          const Icon(
-                            Icons.person,
-                            color: Color(0xFF0047AB),
-                            size: 22,
-                          ),
-
-                          const SizedBox(width: 25),
-
-                          Column(
-                            crossAxisAlignment:
-                                CrossAxisAlignment.start,
-
-                            children: [
-
-                              Text(
-                                refund['name']!,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ),
-
-                              Text(
-                                refund['number']!,
-                                style: const TextStyle(
-                                  fontSize: 10,
-                                  color: Colors.blueGrey,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 15),
-
-                      Row(
-                        children: [
-
-                          const Icon(
-                            Icons.map_outlined,
-                            size: 14,
-                            color: Color(0xFF0047AB),
-                          ),
-
-                          const SizedBox(width: 15),
-
-                          Expanded(
-                            child: Text(
-                              refund['place']!,
-                              style: const TextStyle(
-                                fontSize: 11,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-
-                          const SizedBox(width: 5),
-
-                          Container(
-                            padding: const EdgeInsets.all(5),
-
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.circular(4),
-                            ),
-
-                            child: Text(
-                              refund['seat']!,
-                              style: const TextStyle(
-                                fontSize: 9,
-                                color: Color(0xFF0047AB),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 15),
-
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 5,
-                        ),
-
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFFFDCD9),
-                          borderRadius:
-                              BorderRadius.circular(20),
-                        ),
-
-                        child: const Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-
-                            Icon(
-                              Icons.circle,
-                              size: 6,
-                              color: Colors.red,
-                            ),
-
-                            SizedBox(width: 8),
-
-                            Text(
-                              'PENDING REFUND',
-                              style: TextStyle(
-                                fontSize: 8,
-                                color: Colors.red,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      const SizedBox(height: 18),
-
-                      Row(
-                        mainAxisAlignment:
-                            MainAxisAlignment.spaceBetween,
-
-                        children: [
-
-                          const Text(
-                            'Refund Amount:',
-                            style: TextStyle(
-                              fontSize: 11,
-                              color: Colors.black54,
-                            ),
-                          ),
-
-                          Text(
-                            refund['amount']!,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      Text(
-                        'Reason: ${refund['reason']}',
-                        style: const TextStyle(
-                          fontSize: 11,
-                          color: Colors.black,
-                        ),
-                      ),
-
-                      const SizedBox(height: 15),
-
-                      // Approve Refund and Decline buttons
-                      Row(
-                        mainAxisAlignment:
-                            MainAxisAlignment.spaceEvenly,
-                        children: [
-
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color(0xFF0047AB),
-                              foregroundColor: Colors.white,
-                              padding:
-                                  const EdgeInsets.symmetric(
-                                horizontal: 15,
-                                vertical: 8,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(5),
-                              ),
-                            ),
-                            child: const Text(
-                              'Approve Refund',
-                              style: TextStyle(
-                                fontSize: 10,
-                              ),
-                            ),
-                          ),
-
-                          OutlinedButton(
-                            onPressed: () {},
-                            style: OutlinedButton.styleFrom(
-                              foregroundColor: Colors.red,
-                              side: const BorderSide(
-                                color: Colors.red,
-                              ),
-                              padding:
-                                  const EdgeInsets.symmetric(
-                                horizontal: 25,
-                                vertical: 8,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(5),
-                              ),
-                            ),
-                            child: const Text(
-                              'Decline',
-                              style: TextStyle(
-                                fontSize: 10,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+            // Refund status tag
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: Colors.red.shade100,
+                borderRadius: BorderRadius.circular(20),
               ),
+              child: const Text('PENDING REFUND', style: TextStyle(color: Colors.red, fontSize: 10, fontWeight: FontWeight.bold)),
+            ),
+            const SizedBox(height: 10),
+            
+            // Amount and Reason
+            Text('Refund Amount: $amount', style: const TextStyle(fontWeight: FontWeight.bold)),
+            Text('Reason: $reason', style: const TextStyle(color: Colors.black87)),
+            const SizedBox(height: 15),
+
+            // Action Buttons (Approve / Decline)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    // Show a simple pop-up message for approval
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Refund Approved successfully!')),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue.shade800),
+                  child: const Text('Approve', style: TextStyle(color: Colors.white)),
+                ),
+                OutlinedButton(
+                  onPressed: () {
+                    // Show a simple pop-up message for decline
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Refund Declined!')),
+                    );
+                  },
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(color: Colors.red),
+                  ),
+                  child: const Text('Decline', style: TextStyle(color: Colors.red)),
+                ),
+              ],
+            ),
           ],
         ),
       ),

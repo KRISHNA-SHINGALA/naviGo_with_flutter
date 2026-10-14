@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
-import 'a_completedtrips_history.dart';
-import 'a_transaction_history.dart';
+import 'a_completedtrips_history.dart'; // Import completed trips
+import 'a_transaction_history.dart';    // Import transactions
 
 class AHistoryReports extends StatefulWidget {
   const AHistoryReports({super.key});
@@ -11,124 +10,91 @@ class AHistoryReports extends StatefulWidget {
 }
 
 class _AHistoryReportsState extends State<AHistoryReports> {
-  bool completedTrips = true;
+  // Boolean variable to switch between tabs
+  bool isCompletedTrips = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.fromLTRB(20, 20, 20, 10),
+            child: Text(
+              'History & Reports',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+          ),
 
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-
-            // History & Reports
-            const Padding(
-              padding: EdgeInsets.only(
-                left: 42,
-                top: 22,
-                bottom: 35,
-              ),
-              child: Text(
-                'History & Reports',
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
+          // Toggle Buttons
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            decoration: BoxDecoration(
+              color: Colors.grey.shade200,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isCompletedTrips = true; // Show completed trips
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        color: isCompletedTrips ? Colors.blue.shade800 : Colors.transparent,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Completed Trips',
+                          style: TextStyle(
+                            color: isCompletedTrips ? Colors.white : Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-
-            // Completed Trips / Transactions
-            Container(
-              height: 35,
-              margin: const EdgeInsets.only(
-                left: 31,
-                right: 33,
-                bottom: 25,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(8),
-              ),
-
-              child: Row(
-                children: [
-
-                  // Completed Trips
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          completedTrips = true;
-                        });
-                      },
-
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: completedTrips
-                              ? const Color(0xff0645AD)
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-
-                        child: Center(
-                          child: Text(
-                            'Completed Trips',
-                            style: TextStyle(
-                              color: completedTrips
-                                  ? Colors.white
-                                  : Colors.black,
-                              fontSize: 14,
-                            ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isCompletedTrips = false; // Show transactions
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        color: !isCompletedTrips ? Colors.blue.shade800 : Colors.transparent,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Transactions',
+                          style: TextStyle(
+                            color: !isCompletedTrips ? Colors.white : Colors.black,
                           ),
                         ),
                       ),
                     ),
                   ),
-
-                  // Transactions
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          completedTrips = false;
-                        });
-                      },
-
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: completedTrips
-                              ? Colors.transparent
-                              : const Color(0xff0645AD),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-
-                        child: Center(
-                          child: Text(
-                            'Transactions',
-                            style: TextStyle(
-                              color: completedTrips
-                                  ? Colors.black
-                                  : Colors.white,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
+          ),
+          const SizedBox(height: 15),
 
-            // Page
-            completedTrips
-                ? const ACompletedtripsHistory()
-                : const ATransactionHistory(),
-          ],
-        ),
+          // Show page based on selection
+          Expanded(
+            child: isCompletedTrips ? const ACompletedtripsHistory() : const ATransactionHistory(),
+          ),
+        ],
       ),
     );
   }

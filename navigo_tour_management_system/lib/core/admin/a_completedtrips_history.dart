@@ -1,241 +1,66 @@
 import 'package:flutter/material.dart';
 
-class ACompletedtripsHistory extends StatefulWidget {
+class ACompletedtripsHistory extends StatelessWidget {
   const ACompletedtripsHistory({super.key});
 
   @override
-  State<ACompletedtripsHistory> createState() => _ACompletedtripsHistoryState();
-}
-
-class _ACompletedtripsHistoryState extends State<ACompletedtripsHistory> {
-  final trips = [
-    {
-      'Place': 'Manali Winter Expedition',
-      'Date': 'Jan 10 - Jan 15, 2026',
-      'Passengers': '42 Passengers',
-      'Price': '₹63,000'
-    },
-    {
-      'Place': 'Jaipur, Rajasthan',
-      'Date': 'feb 17 - feb 20, 2026',
-      'Passengers': '35 Passengers',
-      'Price': '₹52,000'
-    },
-
-    {
-      'Place': 'Goa',
-      'Date': 'mar 20 - mar 26, 2026',
-      'Passengers': '58 Passengers',
-      'Price': '₹82,000'
-    }
-  ];
-
-  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: const Color(0xFFD7E3FF),
-                borderRadius: BorderRadius.circular(13),
-              ),
-
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return ListView(
+      padding: const EdgeInsets.all(20),
+      children: [
+        // Summary Box
+        Container(
+          padding: const EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            color: Colors.blue.shade50,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Column(
                 children: [
-                  Column(
-                    children: [
-                      Text(
-                        'TOTAL REVENUE',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.blue.shade900,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-
-                      const Text(
-                        '₹4.5L',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-
-                    ],
-                  ),
-
-                  Column(
-                    children: [
-                      Text(
-                        'COMPLETED',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.blue.shade900,
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-
-                      const Text(
-                        '24',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  Column(
-                    children: [
-                      Text(
-                        'PASSENGERS',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.blue.shade900,
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      const Text(
-                        '850',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold
-                        ),
-                      )
-                    ],
-                  )
+                  Text('REVENUE', style: TextStyle(fontSize: 10, color: Colors.blue)),
+                  Text('₹4.5L', style: TextStyle(fontWeight: FontWeight.bold)),
                 ],
               ),
-            ),
-
-            const SizedBox(height: 10),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  'Recent Completions',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  '2024 (current Year)',
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )
-              ],
-            ),
-
-            const SizedBox(height: 10),
-
-            for (final trip in trips)
-              Card(
-                margin: const EdgeInsets.only(bottom: 10),
-                elevation: 2,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  side: BorderSide(
-                    color:  const Color.fromARGB(149, 254, 254, 254),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(18),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment:
-                            MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            trip['Place']!,
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-
-                          const Text(
-                            'COMPLETED',
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: Colors.green,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        ]
-                      ),
-
-                      const SizedBox(height: 25),
-
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.calendar_month,
-                            size: 15,
-                            color: Colors.grey,
-                          ),
-
-                          const SizedBox(width: 10),
-
-                          Text(
-                            trip['Date']!,
-                            style: const TextStyle(
-                              color: Colors.grey
-                            ),
-                          ),
-
-                          const Spacer(),
-
-                          Text(
-                            trip['Price']!,
-                            style: const TextStyle(
-                              color: Color.fromARGB(255, 6, 75, 132),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 12),
-
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.people,
-                            size: 15,
-                            color: Colors.grey,
-                          ),
-
-                          const SizedBox(width: 10),
-
-                          Text(
-                            trip['Passengers']!,
-                            style: const TextStyle(
-                              color: Colors.grey,
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              )
-          ],
+              Column(
+                children: [
+                  Text('COMPLETED', style: TextStyle(fontSize: 10, color: Colors.blue)),
+                  Text('24', style: TextStyle(fontWeight: FontWeight.bold)),
+                ],
+              ),
+              Column(
+                children: [
+                  Text('PASSENGERS', style: TextStyle(fontSize: 10, color: Colors.blue)),
+                  Text('850', style: TextStyle(fontWeight: FontWeight.bold)),
+                ],
+              ),
+            ],
+          ),
         ),
+        const SizedBox(height: 20),
+        const Text('Recent Completions', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+        const SizedBox(height: 10),
+
+        // List of trips
+        _buildTripHistoryCard('Manali Expedition', 'Jan 10 - Jan 15', '₹63,000'),
+        _buildTripHistoryCard('Jaipur Tour', 'Feb 17 - Feb 20', '₹52,000'),
+        _buildTripHistoryCard('Goa Trip', 'Mar 20 - Mar 26', '₹82,000'),
+      ],
+    );
+  }
+
+  // Simple card widget
+  Widget _buildTripHistoryCard(String title, String date, String price) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 10),
+      color: Colors.white,
+      elevation: 2,
+      child: ListTile(
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+        subtitle: Text(date),
+        trailing: Text(price, style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.bold)),
       ),
     );
   }

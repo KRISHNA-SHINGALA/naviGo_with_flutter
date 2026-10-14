@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
-import 'a_activebooking.dart';
-import 'a_cancelreq.dart';
+import 'a_activebooking.dart'; // Import active bookings list
+import 'a_cancelreq.dart';     // Import cancel requests list
 
 class APassengersRequests extends StatefulWidget {
   const APassengersRequests({super.key});
@@ -11,127 +10,97 @@ class APassengersRequests extends StatefulWidget {
 }
 
 class _APassengersRequestsState extends State<APassengersRequests> {
-  bool activeBookings = true;
+  // Variable to track which tab is selected
+  bool isActiveBookings = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-
-            // Passengers & Requests
-            const Padding(
-              padding: EdgeInsets.only(
-                left: 34,
-                top: 10,
-                bottom: 10,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Page Title
+          const Padding(
+            padding: EdgeInsets.fromLTRB(20, 20, 20, 10),
+            child: Text(
+              'Passengers & Requests',
+              style: TextStyle(
+                fontSize: 24,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
               ),
-              child: Text(
-                'Passengers & Requests',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Color(0xff0047AB),
-                  fontWeight: FontWeight.bold,
+            ),
+          ),
+
+          // Toggle Buttons Container
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            decoration: BoxDecoration(
+              color: Colors.grey.shade200,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              children: [
+                // Active Bookings Button
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isActiveBookings = true; // Switch to Active Bookings
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        color: isActiveBookings ? Colors.blue.shade800 : Colors.transparent,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Active Bookings',
+                          style: TextStyle(
+                            color: isActiveBookings ? Colors.white : Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-
-            // Active Bookings / Cancellation Requests
-            Container(
-              height: 35,
-              margin: const EdgeInsets.only(
-                left: 39,
-                right: 25,
-                bottom: 10,
-              ),
-
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(8),
-              ),
-
-              child: Row(
-                children: [
-
-                  // Active Bookings
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          activeBookings = true;
-                        });
-                      },
-
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: activeBookings
-                              ? const Color(0xff0645AD)
-                              : Colors.transparent,
-
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-
-                        child: Center(
-                          child: Text(
-                            'Active Bookings',
-                            style: TextStyle(
-                              color: activeBookings
-                                  ? Colors.white
-                                  : Colors.black54,
-                              fontSize: 14,
-                            ),
+                // Cancellation Requests Button
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isActiveBookings = false; // Switch to Cancel Requests
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        color: !isActiveBookings ? Colors.blue.shade800 : Colors.transparent,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Cancellation Requests',
+                          style: TextStyle(
+                            color: !isActiveBookings ? Colors.white : Colors.black,
                           ),
                         ),
                       ),
                     ),
                   ),
-
-                  // Cancellation Requests
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          activeBookings = false;
-                        });
-                      },
-
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: activeBookings
-                              ? Colors.transparent
-                              : const Color(0xff0645AD),
-
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-
-                        child: Center(
-                          child: Text(
-                            'Cancellation Requests',
-                            style: TextStyle(
-                              color: activeBookings
-                                  ? Colors.black54
-                                  : Colors.white,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
+          ),
 
-            // Page
-            activeBookings
-                ? const Activebooking()
-                : const CancelRequest(),
-          ],
-        ),
+          // Show the selected page here using ternary operator
+          Expanded(
+            child: isActiveBookings ? const Activebooking() : const CancelRequest(),
+          ),
+        ],
       ),
     );
   }
