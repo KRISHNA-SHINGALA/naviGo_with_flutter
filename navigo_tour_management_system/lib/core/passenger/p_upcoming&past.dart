@@ -1,9 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:navigo_tour_management_system/core/passenger/passenger_bottom_bar.dart';
 import 'package:navigo_tour_management_system/core/passenger/passenger_top_bar.dart';
 import 'p_upcoming.dart';
 import 'p_past.dart';
+import 'passenger_profile_screen.dart'; // Add this import
 
 class MyTrips extends StatefulWidget {
   const MyTrips({super.key});
@@ -19,35 +19,24 @@ class _MyTripsState extends State<MyTrips> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-
-
       appBar: PreferredSize(
-  preferredSize: const Size.fromHeight(60.0), 
-  child: PassengerTopBar( // Yahan se 'const' hata diya hai
-    onProfileTap: () {
-      // Yahan aap profile page par navigate karne ka code likh sakte hain
-      // Example: Navigator.push(...);
-      print("Profile clicked!");
-    },
-  ),
-),
-
-bottomNavigationBar: const PassengerBottomBar(currentIndex: 0),
-
-
-
+        preferredSize: const Size.fromHeight(60.0), 
+        child: PassengerTopBar(
+          onProfileTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const PassengerProfileScreen()),
+            );
+          },
+        ),
+      ),
+      bottomNavigationBar: const PassengerBottomBar(currentIndex: 2), // Index 2 for Saved/My Trips
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            // My Trips
             const Padding(
-              padding: EdgeInsets.only(
-                left: 25,
-                top: 20,
-                bottom: 15,
-              ),
+              padding: EdgeInsets.only(left: 25, top: 20, bottom: 15),
               child: Text(
                 'My Trips',
                 style: TextStyle(
@@ -57,49 +46,31 @@ bottomNavigationBar: const PassengerBottomBar(currentIndex: 0),
                 ),
               ),
             ),
-
-            // Upcoming / Past
             Container(
               height: 40,
-              margin: const EdgeInsets.only(
-                left: 31,
-                right: 31,
-                bottom: 10,
-              ),
+              margin: const EdgeInsets.only(left: 31, right: 31, bottom: 10),
               padding: const EdgeInsets.all(4),
-
               decoration: BoxDecoration(
                 color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(20),
               ),
-
               child: Row(
                 children: [
-
-                  // Upcoming
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        setState(() {
-                          upcoming = true;
-                        });
+                        setState(() { upcoming = true; });
                       },
-
                       child: Container(
                         decoration: BoxDecoration(
-                          color: upcoming
-                              ? Colors.white
-                              : Colors.transparent,
+                          color: upcoming ? Colors.white : Colors.transparent,
                           borderRadius: BorderRadius.circular(20),
                         ),
-
                         child: Center(
                           child: Text(
                             'Upcoming',
                             style: TextStyle(
-                              color: upcoming
-                                  ? const Color(0xff0645AD)
-                                  : Colors.black54,
+                              color: upcoming ? const Color(0xff0645AD) : Colors.black54,
                               fontSize: 14,
                             ),
                           ),
@@ -107,31 +78,21 @@ bottomNavigationBar: const PassengerBottomBar(currentIndex: 0),
                       ),
                     ),
                   ),
-
-                  // Past
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        setState(() {
-                          upcoming = false;
-                        });
+                        setState(() { upcoming = false; });
                       },
-
                       child: Container(
                         decoration: BoxDecoration(
-                          color: upcoming
-                              ? Colors.transparent
-                              : Colors.white,
+                          color: upcoming ? Colors.transparent : Colors.white,
                           borderRadius: BorderRadius.circular(20),
                         ),
-
                         child: Center(
                           child: Text(
                             'Past',
                             style: TextStyle(
-                              color: upcoming
-                                  ? Colors.black54
-                                  : const Color(0xff0645AD),
+                              color: upcoming ? Colors.black54 : const Color(0xff0645AD),
                               fontSize: 14,
                             ),
                           ),
@@ -142,11 +103,7 @@ bottomNavigationBar: const PassengerBottomBar(currentIndex: 0),
                 ],
               ),
             ),
-
-            // Upcoming / Past Page
-            upcoming
-                ? const PUpcoming()
-                : const PPastTrips(),
+            upcoming ? const PUpcoming() : const PPastTrips(),
           ],
         ),
       ),
