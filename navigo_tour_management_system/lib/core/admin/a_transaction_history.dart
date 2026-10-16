@@ -1,59 +1,249 @@
+
 import 'package:flutter/material.dart';
 
 class ATransactionHistory extends StatelessWidget {
   const ATransactionHistory({super.key});
 
+  static const Color primaryBlue = Color(0xFF0056D2);
+
+  final List<Map<String, dynamic>> transactions = const [
+    {
+      'name': 'Arjun Malhotra',
+      'date': 'Oct 24, 10:45 AM',
+      'description': 'Trip Payment',
+      'amount': 3000,
+      'status': 'SUCCESS',
+    },
+    {
+      'name': 'Rahul Sharma',
+      'date': 'Oct 23, 02:30 PM',
+      'description': 'Passenger Refund',
+      'amount': -1500,
+      'status': 'REFUNDED',
+    },
+    {
+      'name': 'Heet Tala',
+      'date': 'Oct 22, 11:15 AM',
+      'description': 'Trip Payment',
+      'amount': 3500,
+      'status': 'SUCCESS',
+    },
+    {
+      'name': 'Kavya Patel',
+      'date': 'Oct 21, 09:20 AM',
+      'description': 'Trip Payment',
+      'amount': 2500,
+      'status': 'SUCCESS',
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(20),
-      children: [
-        // Transaction Summary
-        Container(
-          padding: const EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            color: Colors.blue.shade50,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('Net Income', style: TextStyle(color: Colors.grey)),
-              const Text('₹4.2L', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text('Received: ₹4.5L', style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
-                  Text('Refunded: ₹30K', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
-                ],
-              ),
-            ],
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+        ),
+        title: const Text(
+          'Transaction History',
+          style: TextStyle(
+            color: primaryBlue,
+            fontSize: 19,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 20),
-        const Text('Recent Transactions', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-        const SizedBox(height: 10),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          // Display the financial summary.
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: const Color(0xFFDCE6FF),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Net Income',
+                  style: TextStyle(color: Colors.black54),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  '₹4.2L',
+                  style: TextStyle(
+                    color: primaryBlue,
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _FinancialItem(
+                        title: 'Received',
+                        amount: '₹4.5L',
+                        color: Colors.green,
+                      ),
+                    ),
+                    Expanded(
+                      child: _FinancialItem(
+                        title: 'Refunded',
+                        amount: '₹30K',
+                        color: Colors.red,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
 
-        // Transactions list
-        _buildTransactionCard('Arjun Malhotra', '+ ₹3,000', Colors.green),
-        _buildTransactionCard('Rahul Sharma', '- ₹1,500', Colors.red),
-        _buildTransactionCard('Heet Tala', '+ ₹3,500', Colors.green),
-      ],
+          const SizedBox(height: 24),
+
+          const Text(
+            'Recent Transactions',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+
+          const SizedBox(height: 12),
+
+          // Display individual transaction records.
+          ...transactions.map((transaction) {
+            final int amount = transaction['amount'] as int;
+            final bool isRefund = amount < 0;
+
+            return Card(
+              color: Colors.white,
+              elevation: 1,
+              margin: const EdgeInsets.only(bottom: 10),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+                side: BorderSide(color: Colors.grey.shade200),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: isRefund
+                          ? const Color(0xFFFFE5E5)
+                          : const Color(0xFFE5F6E9),
+                      child: Icon(
+                        isRefund
+                            ? Icons.keyboard_return
+                            : Icons.payments_outlined,
+                        color: isRefund ? Colors.red : Colors.green,
+                      ),
+                    ),
+
+                    const SizedBox(width: 12),
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            transaction['name'] as String,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            transaction['description'] as String,
+                            style: const TextStyle(
+                              fontSize: 11,
+                              color: Colors.black54,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            transaction['date'] as String,
+                            style: const TextStyle(
+                              fontSize: 10,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            transaction['status'] as String,
+                            style: TextStyle(
+                              color: isRefund ? Colors.red : Colors.green,
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(width: 8),
+
+                    Text(
+                      '${isRefund ? '-' : '+'} ₹${amount.abs()}',
+                      style: TextStyle(
+                        color: isRefund ? Colors.red : Colors.green,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }),
+        ],
+      ),
     );
   }
+}
 
-  Widget _buildTransactionCard(String name, String amount, Color amountColor) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 10),
-      color: Colors.white,
-      elevation: 1,
-      child: ListTile(
-        leading: const Icon(Icons.person),
-        title: Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: const Text('Oct 24, 10:45 AM'),
-        trailing: Text(amount, style: TextStyle(color: amountColor, fontWeight: FontWeight.bold, fontSize: 16)),
-      ),
+// Reusable widget for financial summary items.
+class _FinancialItem extends StatelessWidget {
+  final String title;
+  final String amount;
+  final Color color;
+
+  const _FinancialItem({
+    required this.title,
+    required this.amount,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 12,
+            color: Colors.black54,
+          ),
+        ),
+        const SizedBox(height: 5),
+        Text(
+          amount,
+          style: TextStyle(
+            color: color,
+            fontSize: 19,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
     );
   }
 }

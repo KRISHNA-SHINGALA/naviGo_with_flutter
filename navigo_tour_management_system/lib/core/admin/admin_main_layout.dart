@@ -1,8 +1,10 @@
-import 'package:flutter/material.dart';
 
-// Niche apni baaki screens ke correct paths import karein
+import 'package:flutter/material.dart';
+import 'package:navigo_tour_management_system/core/admin/a_activebooking_cancelreq.dart';
+import 'package:navigo_tour_management_system/core/admin/a_history_report.dart';
+
 import 'a_dashboard.dart';
-import 'a_activebooking&cancelreq.dart';
+import 'a_create_trip.dart';
 import 'admin_profile_screen.dart';
 
 class AdminMainLayout extends StatefulWidget {
@@ -13,128 +15,142 @@ class AdminMainLayout extends StatefulWidget {
 }
 
 class _AdminMainLayoutState extends State<AdminMainLayout> {
-  int _currentIndex = 0;
+  final Color primaryBlue = const Color(0xFF0056D2);
 
-  // Bottom Navigation Bar ki sabhi screens ki list
-  final List<Widget> _screens = [
-    const AdminDashboard(),
-    const Center(child: Text('Tours Screen (Coming Soon)')), // Placeholder for Tours
-    const Center(child: Text('Saved Screen (Coming Soon)')), // Placeholder for Saved
-    const APassengersRequests(),
-    const AdminProfileScreen(),
+  int selectedIndex = 0;
+
+  final List<GlobalKey<NavigatorState>> navigatorKeys = [
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
   ];
+
+  Widget _getPage(int index) {
+    switch (index) {
+      case 0:
+        return AdminDashboard();
+      case 1:
+        return AdminCreateTrip();
+      case 2:
+        return const AdminHistoryReports();
+      case 3:
+        return AdminActiveBookingCancelReq();
+      case 4:
+        return const AdminProfileScreen();
+      default:
+        return AdminDashboard();
+    }
+  }
+
+  Widget _buildNavigator(int index) {
+    return Navigator(
+      key: navigatorKeys[index],
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute<void>(
+          builder: (context) => _getPage(index),
+        );
+      },
+    );
+  }
+
+  void _onItemTapped(int index) {
+    if (selectedIndex == index) {
+      navigatorKeys[index]
+          .currentState
+          ?.popUntil((route) => route.isFirst);
+    } else {
+      setState(() {
+        selectedIndex = index;
+      });
+    }
+  }
+
+  Future<bool> _onWillPop() async {
+    final currentNavigator = navigatorKeys[selectedIndex].currentState;
+
+    if (currentNavigator != null && currentNavigator.canPop()) {
+      currentNavigator.pop();
+      return false;
+    }
+
+    if (selectedIndex != 0) {
+      setState(() {
+        selectedIndex = 0;
+      });
+      return false;
+    }
+
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      
-      // ==========================================
-      // TOP BAR (APP BAR)
-      // ==========================================
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        // Bottom border line ke liye
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1.0),
-          child: Container(
-            color: Colors.grey.shade300,
-            height: 1.0,
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF5F7FB),
+        body: IndexedStack(
+          index: selectedIndex,
+          children: List.generate(
+            5,
+            (index) => _buildNavigator(index),
           ),
         ),
-        title: Row(
-          children: [
-            // NaviGo Logo Icon
-Image.asset(
-  'assets/images/NaviGo_logo_only.png',
-  width: 35,
-  height: 40,
-  fit: BoxFit.contain,
-),
-            const SizedBox(width: 8),
-            // NaviGo Text
-            const Text(
-              'NaviGo',
-              style: TextStyle(
-                color: Color(0xFF0056D2),
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.08),
+                blurRadius: 12,
+                offset: const Offset(0, -3),
               ),
-            ),
-          ],
-        ),
-        actions: [
-          // User Profile Icon Button
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: CircleAvatar(
-              radius: 18,
-              backgroundColor: Colors.grey.shade300,
-              child: const Icon(
-                Icons.person,
-                color: Colors.black54,
-                size: 20,
-              ),
+            ],
+          ),
+          child: SafeArea(
+            top: false,
+            child: BottomNavigationBar(
+              currentIndex: selectedIndex,
+              onTap: _onItemTapped,
+              type: BottomNavigationBarType.fixed,
+              backgroundColor: Colors.white,
+              selectedItemColor: primaryBlue,
+              unselectedItemColor: Colors.grey.shade600,
+              selectedFontSize: 11,
+              unselectedFontSize: 10,
+              showUnselectedLabels: true,
+              elevation: 0,
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home_outlined),
+                  activeIcon: Icon(Icons.home),
+                  label: 'Home',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.directions_bus_outlined),
+                  activeIcon: Icon(Icons.directions_bus),
+                  label: 'Trip',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.people_outline),
+                  activeIcon: Icon(Icons.people),
+                  label: 'Passenger',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.account_balance_wallet_outlined),
+                  activeIcon: Icon(Icons.account_balance_wallet),
+                  label: 'Save',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.person_outline),
+                  activeIcon: Icon(Icons.person),
+                  label: 'Profile',
+                ),
+              ],
             ),
           ),
-        ],
-      ),
-
-      // ==========================================
-      // BODY CONTENT
-      // ==========================================
-      body: _screens[_currentIndex],
-
-      // ==========================================
-      // BOTTOM NAVIGATION BAR
-      // ==========================================
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(color: Colors.grey.shade300, width: 1.0),
-          ),
-        ),
-        child: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-          backgroundColor: Colors.white,
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: const Color(0xFF0056D2),
-          unselectedItemColor: Colors.black87,
-          selectedFontSize: 11,
-          unselectedFontSize: 11,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.directions_bus_outlined),
-              activeIcon: Icon(Icons.directions_bus),
-              label: 'Tours',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.bookmark_outline),
-              activeIcon: Icon(Icons.bookmark),
-              label: 'Saved',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.people_alt_outlined), 
-              activeIcon: Icon(Icons.people_alt),
-              label: 'Passengers',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
-              activeIcon: Icon(Icons.person),
-              label: 'Profile',
-            ),
-          ],
         ),
       ),
     );

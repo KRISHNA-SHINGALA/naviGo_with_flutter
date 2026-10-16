@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+
 import 'a_create_trip.dart';
 import 'a_trip_details.dart';
 
@@ -10,96 +12,143 @@ class AdminDashboard extends StatefulWidget {
 }
 
 class _AdminDashboardState extends State<AdminDashboard> {
+  static const Color primaryBlue = Color(0xFF0056D2);
+  static const Color lightBlue = Color(0xFFDCE6FF);
+
+  final List<Map<String, dynamic>> _trips = [
+    {
+      'title': 'GOA Tour',
+      'date': 'Oct 12 - Oct 18, 2026',
+      'status': 'CONFIRMED',
+      'seats': '14/20 seats',
+      'image': 'assets/images/Goa_tour.jpg',
+      'color': Colors.green,
+    },
+    {
+      'title': 'Kyoto Heritage Tour',
+      'date': 'Nov 05 - Nov 12, 2026',
+      'status': 'ON TOUR',
+      'seats': '18/18 seats',
+      'image': 'assets/images/kyoto_tour.jpg',
+      'color': Colors.blue,
+    },
+    {
+      'title': 'Swiss Alps Grand Train',
+      'date': 'Dec 01 - Dec 10, 2026',
+      'status': 'IN PROGRESS',
+      'seats': '08/12 seats',
+      'image': 'assets/images/swiss_alps.jpg',
+      'color': Colors.orange,
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(16, 14, 16, 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Page Title
               const Text(
                 'Admin Overview',
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: Colors.black87,
                 ),
               ),
-              const SizedBox(height: 18),
 
-              // Top Statistics Boxes (Row with two boxes)
+              const SizedBox(height: 16),
+
+              // Dashboard statistics
               Row(
                 children: [
                   Expanded(
-                    child: _buildStatCard('550', 'Total Passengers', Icons.people_outline),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _buildStatCard('₹45.2k', 'Total Revenue', Icons.currency_rupee),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 25),
-
-              // Section Title for Active Trips
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
-                    'Manage Active Trips',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                    child: _buildStatCard(
+                      title: 'Total Trips',
+                      value: '1,284',
+                      icon: Icons.map_outlined,
                     ),
                   ),
-                  Text(
-                    'View All',
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: _buildStatCard(
+                      title: 'Total Revenue',
+                      value: '₹45.2k',
+                      icon: Icons.payments_outlined,
+                    ),
                   ),
                 ],
               ),
-              const SizedBox(height: 14),
 
-              // Trip 1 - Clickable to open Trip Details
-              GestureDetector(
-                onTap: () {
-                  // Go to Trip Details page when clicked
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const AdminTripDetails()),
-                  );
-                },
-                child: _buildTripCard(
-                  'assets/images/Goa_tour.jpg', // Make sure this image exists
-                  'GOA Tour',
-                  'Oct 12 - Oct 18, 2026',
-                  'CONFIRMED',
-                  '14/20 seats',
-                  Colors.green,
+              const SizedBox(height: 26),
+
+              // Active trips heading and View All action
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Flexible(
+                    child: Text(
+                      'Manage Active Trips',
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const AdminTripDetails(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'View All',
+                      style: TextStyle(color: primaryBlue),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 8),
+
+              // Display all active trip cards
+              ..._trips.map(
+                (trip) => Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: _buildTripCard(trip),
                 ),
               ),
-              const SizedBox(height: 14),
 
-              // Trip 2
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const AdminTripDetails()),
-                  );
-                },
-                child: _buildTripCard(
-                  'assets/images/spiti valley.jpg', // Make sure this image exists
-                  'Spiti Valley',
-                  'Nov 05 - Nov 12, 2026',
-                  'ON TOUR',
-                  '18/18 seats',
-                  Colors.orange,
+              const SizedBox(height: 8),
+
+              // Create a new trip
+              SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: ElevatedButton.icon(
+                  onPressed: _openCreateTrip,
+                  icon: const Icon(Icons.add, color: Colors.white),
+                  label: const Text(
+                    'Create New Trip',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: primaryBlue,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -107,85 +156,176 @@ class _AdminDashboardState extends State<AdminDashboard> {
         ),
       ),
 
-      // Floating button to create a new trip
+      // Floating action button for quick trip creation
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Go to Create Trip page
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const AdminCreateTrip()),
-          );
-        },
-        backgroundColor: Colors.blue.shade800,
-        child: const Icon(Icons.add, color: Colors.white, size: 28),
+        onPressed: _openCreateTrip,
+        backgroundColor: const Color(0xFF3025F5),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
 
-  // Simple function to build a small statistic box
-  Widget _buildStatCard(String value, String title, IconData icon) {
+  // Build a dashboard statistics card
+  Widget _buildStatCard({
+    required String title,
+    required String value,
+    required IconData icon,
+  }) {
     return Container(
-      padding: const EdgeInsets.all(14),
+      height: 100,
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.blue.shade50,
+        color: lightBlue,
         borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, size: 24, color: Colors.blue.shade700),
-          const SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(value, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              Text(title, style: const TextStyle(fontSize: 12, color: Colors.grey)),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Simple function to build a trip card
-  Widget _buildTripCard(String image, String title, String date, String status, String seats, Color statusColor) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade300),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Trip Image
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            child: Image.asset(image, width: double.infinity, height: 145, fit: BoxFit.cover),
+          Icon(icon, color: primaryBlue, size: 22),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 12,
+              color: Colors.black54,
+            ),
           ),
-          // Trip Data
-          Padding(
-            padding: const EdgeInsets.all(14),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 6),
-                Text(date, style: const TextStyle(fontSize: 12, color: Colors.grey)),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      status,
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: statusColor),
-                    ),
-                    Text(seats, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
-                  ],
-                ),
-              ],
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 21,
+              fontWeight: FontWeight.bold,
+              color: primaryBlue,
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  // Build an individual trip card
+  Widget _buildTripCard(Map<String, dynamic> trip) {
+    final Color statusColor = trip['color'] as Color;
+
+    return Material(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(12),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: () => _openTripDetails(),
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey.shade400),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(
+                  trip['image'] as String,
+                  width: 65,
+                  height: 62,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      width: 65,
+                      height: 62,
+                      color: lightBlue,
+                      alignment: Alignment.center,
+                      child: const Icon(
+                        Icons.landscape_outlined,
+                        color: primaryBlue,
+                        size: 30,
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              const SizedBox(width: 10),
+
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      trip['title'] as String,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    const SizedBox(height: 4),
+
+                    Text(
+                      trip['date'] as String,
+                      style: const TextStyle(
+                        fontSize: 10,
+                        color: Colors.black54,
+                      ),
+                    ),
+
+                    const SizedBox(height: 6),
+
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 7,
+                        vertical: 3,
+                      ),
+                      decoration: BoxDecoration(
+                        color: statusColor.withAlpha(30),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        trip['status'] as String,
+                        style: TextStyle(
+                          fontSize: 9,
+                          fontWeight: FontWeight.bold,
+                          color: statusColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(width: 4),
+
+              Text(
+                trip['seats'] as String,
+                style: const TextStyle(
+                  fontSize: 10,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Navigate to the Create Trip screen
+  void _openCreateTrip() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const AdminCreateTrip(),
+      ),
+    );
+  }
+
+  // Navigate to the Trip Details screen
+  void _openTripDetails() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const AdminTripDetails(),
       ),
     );
   }
