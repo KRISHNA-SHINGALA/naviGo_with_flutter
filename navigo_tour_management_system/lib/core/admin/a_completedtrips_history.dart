@@ -37,21 +37,7 @@ class AdminCompletedTrips extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-        ),
-        title: const Text(
-          'Completed Trips',
-          style: TextStyle(
-            color: primaryBlue,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [

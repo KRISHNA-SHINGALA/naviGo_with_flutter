@@ -34,7 +34,7 @@ class _AdminMainLayoutState extends State<AdminMainLayout> {
       case 1:
         return AdminCreateTrip();
       case 2:
-        return const AdminHistoryReports();
+        return const Admintransactioncompletedhistory();
       case 3:
         return AdminActiveBookingCancelReq();
       case 4:

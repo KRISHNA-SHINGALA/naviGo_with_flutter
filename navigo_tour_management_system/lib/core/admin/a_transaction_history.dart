@@ -41,26 +41,10 @@ class ATransactionHistory extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-        ),
-        title: const Text(
-          'Transaction History',
-          style: TextStyle(
-            color: primaryBlue,
-            fontSize: 19,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+      
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          // Display the financial summary.
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
@@ -118,7 +102,6 @@ class ATransactionHistory extends StatelessWidget {
 
           const SizedBox(height: 12),
 
-          // Display individual transaction records.
           ...transactions.map((transaction) {
             final int amount = transaction['amount'] as int;
             final bool isRefund = amount < 0;
@@ -210,7 +193,6 @@ class ATransactionHistory extends StatelessWidget {
   }
 }
 
-// Reusable widget for financial summary items.
 class _FinancialItem extends StatelessWidget {
   final String title;
   final String amount;
