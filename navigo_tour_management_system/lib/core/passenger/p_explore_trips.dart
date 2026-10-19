@@ -19,17 +19,22 @@ class _PassengerExploreTripsState extends State<PassengerExploreTrips> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60.0), 
-        child: PassengerTopBar(
-          onProfileTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const PassengerProfileScreen()),
-            );
-          },
-        ),
-      ),
+appBar: PreferredSize(
+  preferredSize: const Size.fromHeight(100),
+  child: SafeArea(
+    bottom: false,
+    child: PassengerTopBar(
+      onProfileTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const PassengerProfileScreen(),
+          ),
+        );
+      },
+    ),
+  ),
+),
       bottomNavigationBar: const PassengerBottomBar(currentIndex: 1), // Index 1 for Tours
       body: SafeArea(
         child: SingleChildScrollView(

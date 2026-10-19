@@ -23,19 +23,24 @@ class _PassDashboardState extends State<PassDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80.0), 
-        child: SafeArea(
-          child: PassengerTopBar(
-            onProfileTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const PassengerProfileScreen()),
-              );
-            },
+
+appBar: PreferredSize(
+  preferredSize: const Size.fromHeight(100),
+  child: SafeArea(
+    bottom: false,
+    child: PassengerTopBar(
+      onProfileTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const PassengerProfileScreen(),
           ),
-        ),
-      ),
+        );
+      },
+    ),
+  ),
+),
+
       bottomNavigationBar: const PassengerBottomBar(currentIndex: 0), // Index 0 for Home
       body: SingleChildScrollView(
         child: Column(
@@ -68,7 +73,7 @@ class _PassDashboardState extends State<PassDashboard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(AppStrings.upcomingTours, style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
-                  Text(AppStrings.viewAll, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.primary)),
+                  // Text(AppStrings.viewAll, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.primary)),
                 ],
               ),
             ),
@@ -102,7 +107,7 @@ class _PassDashboardState extends State<PassDashboard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(AppStrings.popularDestinations, style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
-                  Text(AppStrings.viewAll, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.primary)),
+                  // Text(AppStrings.viewAll, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.primary)),
                 ],
               ),
             ),
