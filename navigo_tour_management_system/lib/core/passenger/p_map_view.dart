@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:navigo_tour_management_system/core/passenger/p_booking.dart';
 import 'package:navigo_tour_management_system/core/passenger/passenger_bottom_bar.dart';
 import 'package:navigo_tour_management_system/resources/colors.dart';
 
@@ -41,7 +42,14 @@ class PassengerMapView extends StatelessWidget {
               SizedBox(
                 width: double.infinity, height: 40,
                 child: ElevatedButton(
-                  onPressed: () => Navigator.pop(context), // Go back functionality
+                  onPressed: () {
+                          Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const Booking(),
+    ),
+  );
+                  },
                   style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, foregroundColor: Colors.white, elevation: 0, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
-
+import 'package:navigo_tour_management_system/core/admin/admin_top_bar.dart';
+import 'package:navigo_tour_management_system/resources/image.dart';
 import 'a_create_trip.dart';
 import 'a_map_view.dart';
 
@@ -19,46 +20,13 @@ class AdminTripDetails extends StatelessWidget {
       backgroundColor: Colors.white,
 
       // App header
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        title: const Row(
-          children: [
-            Icon(Icons.route, color: primaryBlue, size: 25),
-            SizedBox(width: 7),
-            Text(
-              'NaviGo',
-              style: TextStyle(
-                color: primaryBlue,
-                fontWeight: FontWeight.bold,
-                fontSize: 19,
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 14),
-            child: CircleAvatar(
-              radius: 17,
-              backgroundColor: Color(0xFFEFEFEF),
-              child: Icon(
-                Icons.person,
-                color: Colors.black54,
-                size: 20,
-              ),
-            ),
-          ),
-        ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1),
-          child: Container(
-            height: 1,
-            color: Color(0xFFE0E0E0),
-          ),
-        ),
-      ),
+      appBar: PreferredSize(
+  preferredSize: const Size.fromHeight(66),
+  child: const SafeArea(
+    bottom: false,
+    child: AdminTopBar(),
+  ),
+),
 
       body: SafeArea(
         child: SingleChildScrollView(
@@ -67,28 +35,28 @@ class AdminTripDetails extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Trip cover image
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.asset(
-                  'assets/images/mahakaleshwar_temple.jpg',
-                  width: double.infinity,
-                  height: 190,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      width: double.infinity,
-                      height: 190,
-                      color: lightBlue,
-                      child: const Icon(
-                        Icons.temple_hindu,
-                        color: primaryBlue,
-                        size: 75,
-                      ),
-                    );
-                  },
-                ),
-              ),
-
+              // Trip cover image
+ClipRRect(
+  borderRadius: BorderRadius.circular(12),
+  child: Image.asset(
+    AppImages.mahakaleshwar,
+    width: double.infinity,
+    height: 190,
+    fit: BoxFit.cover,
+    errorBuilder: (context, error, stackTrace) {
+      return Container(
+        width: double.infinity,
+        height: 190,
+        color: lightBlue,
+        child: const Icon(
+          Icons.temple_hindu,
+          color: primaryBlue,
+          size: 75,
+        ),
+      );
+    },
+  ),
+),
               const SizedBox(height: 14),
 
               // Trip name
@@ -367,7 +335,7 @@ class AdminTripDetails extends StatelessWidget {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text(
-                      'Trip cancellation requested.',
+                      'Trip is cancelled!!.',
                     ),
                   ),
                 );

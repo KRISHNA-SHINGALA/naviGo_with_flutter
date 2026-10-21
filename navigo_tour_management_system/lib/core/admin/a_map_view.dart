@@ -43,10 +43,10 @@ class _AdminMapViewState extends State<AdminMapView> {
                 border: Border.all(color: Colors.grey.shade300),
               ),
               // If you have the map image in assets, uncomment the below line
-              // child: Image.asset('assets/images/Admin_map.png', fit: BoxFit.cover),
-              child: const Center(
-                child: Text('Map Image Here'),
-              ),
+              child: Image.asset('assets/images/Admin_map.png', fit: BoxFit.cover),
+              // child: const Center(
+              //   child: Text('Map Image Here'),
+              // ),
             ),
             const SizedBox(height: 20),
 

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:navigo_tour_management_system/core/admin/admin_top_bar.dart';
 
 import 'a_map_view.dart';
 
@@ -201,32 +202,13 @@ class _AdminCreateTripState extends State<AdminCreateTrip> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Row(
-          children: [
-            Icon(Icons.route, color: primaryBlue, size: 25),
-            SizedBox(width: 7),
-            Text(
-              'NaviGo',
-              style: TextStyle(
-                color: primaryBlue,
-                fontSize: 19,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1),
-          child: Container(height: 1, color: Colors.grey.shade300),
-        ),
-      ),
+appBar: PreferredSize(
+  preferredSize: const Size.fromHeight(66),
+  child: const SafeArea(
+    bottom: false,
+    child: AdminTopBar(),
+  ),
+),
       body: SafeArea(
         child: Form(
           key: _formKey,
