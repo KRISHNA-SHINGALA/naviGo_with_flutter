@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:navigo_tour_management_system/core/passenger/p_tripsdetails.dart';
 import 'package:navigo_tour_management_system/core/passenger/passenger_bottom_bar.dart';
 import 'package:navigo_tour_management_system/resources/colors.dart';
 import 'package:navigo_tour_management_system/resources/image.dart';
@@ -12,12 +13,13 @@ class PassengerExploreTrips extends StatefulWidget {
 
 class _PassengerExploreTripsState extends State<PassengerExploreTrips> {
   int selectedTab = 0;
+  String searchQuery = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: const PassengerBottomBar(currentIndex: 1), // Index 1 for Tours
+      bottomNavigationBar: const PassengerBottomBar(currentIndex: 1),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -34,35 +36,83 @@ class _PassengerExploreTripsState extends State<PassengerExploreTrips> {
                   ),
                 ),
                 const SizedBox(height: 10),
+
+                // SEARCH FIELD
                 SizedBox(
                   height: 34,
                   child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        searchQuery = value.trim().toLowerCase();
+                      });
+                    },
                     decoration: InputDecoration(
                       hintText: 'Search destinations, cities...',
-                      hintStyle: const TextStyle(fontSize: 11, color: Color(0xFF7A8DB5)),
-                      prefixIcon: const Icon(Icons.search, size: 17, color: AppColors.primary),
-                      prefixIconConstraints: const BoxConstraints(minWidth: 35),
+                      hintStyle: const TextStyle(
+                        fontSize: 11,
+                        color: Color(0xFF7A8DB5),
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.search,
+                        size: 17,
+                        color: AppColors.primary,
+                      ),
+                      prefixIconConstraints:
+                          const BoxConstraints(minWidth: 35),
                       filled: true,
                       fillColor: const Color(0xFFDDE7FF),
-                      contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(20), borderSide: BorderSide.none),
-                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(20), borderSide: BorderSide.none),
-                      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(20), borderSide: BorderSide.none),
+                      contentPadding: const EdgeInsets.symmetric(
+                        vertical: 0,
+                        horizontal: 8,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide.none,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide.none,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide.none,
+                      ),
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 10),
+
+                // FILTER TABS
                 Row(
                   children: [
-                    Expanded(child: _buildFilterTab(title: 'All Trips', index: 0)),
+                    Expanded(
+                      child: _buildFilterTab(
+                        title: 'All Trips',
+                        index: 0,
+                      ),
+                    ),
                     const SizedBox(width: 5),
-                    Expanded(child: _buildFilterTab(title: 'This Week', index: 1)),
+                    Expanded(
+                      child: _buildFilterTab(
+                        title: 'This Week',
+                        index: 1,
+                      ),
+                    ),
                     const SizedBox(width: 5),
-                    Expanded(child: _buildFilterTab(title: 'This Month', index: 2)),
+                    Expanded(
+                      child: _buildFilterTab(
+                        title: 'This Month',
+                        index: 2,
+                      ),
+                    ),
                   ],
                 ),
+
                 const SizedBox(height: 14),
+
                 _buildSelectedTrips(),
+
                 const SizedBox(height: 20),
               ],
             ),
@@ -72,8 +122,12 @@ class _PassengerExploreTripsState extends State<PassengerExploreTrips> {
     );
   }
 
-  Widget _buildFilterTab({required String title, required int index}) {
+  Widget _buildFilterTab({
+    required String title,
+    required int index,
+  }) {
     final bool isSelected = selectedTab == index;
+
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -83,7 +137,9 @@ class _PassengerExploreTripsState extends State<PassengerExploreTrips> {
       child: Container(
         height: 25,
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : const Color(0xFFD5D5D5),
+          color: isSelected
+              ? AppColors.primary
+              : const Color(0xFFD5D5D5),
           borderRadius: BorderRadius.circular(15),
         ),
         alignment: Alignment.center,
@@ -92,17 +148,62 @@ class _PassengerExploreTripsState extends State<PassengerExploreTrips> {
           style: TextStyle(
             fontSize: 9,
             fontWeight: FontWeight.w500,
-            color: isSelected ? Colors.white : const Color(0xFF666666),
+            color: isSelected
+                ? Colors.white
+                : const Color(0xFF666666),
           ),
         ),
       ),
     );
   }
 
+  // CHECKS WHETHER A TRIP MATCHES THE SEARCH
+  bool _matchesSearch(List<String> details) {
+    if (searchQuery.isEmpty) return true;
+
+    return details.any(
+      (detail) => detail.toLowerCase().contains(searchQuery),
+    );
+  }
+
   Widget _buildSelectedTrips() {
-    if (selectedTab == 0) {
-      return Column(
-        children: [
+    // THIS WEEK
+    if (selectedTab == 1) {
+      return _buildNoTripsMessage(
+        searchQuery.isEmpty
+            ? 'No trips available this week.'
+            : 'No matching trips found this week.',
+      );
+    }
+
+    // CHECK EACH TRIP AGAINST THE SEARCH
+    final bool showMahakaleshwar = _matchesSearch([
+      'Mahakaleshwar',
+      'Ujjain',
+      '4.9',
+      '15 Oct - 20 Oct',
+      'Premium AC Sleeper',
+      '15 Seats Available',
+      '5000',
+    ]);
+
+    final bool showSolangValley = _matchesSearch([
+      'Solang Valley',
+      'Manali',
+      '4.7',
+      '22 Oct - 28 Oct',
+      'Luxury Executive',
+      '2 Seats Available',
+      '10000',
+    ]);
+
+    if (!showMahakaleshwar && !showSolangValley) {
+      return _buildNoTripsMessage('No matching trips found.');
+    }
+
+    return Column(
+      children: [
+        if (showMahakaleshwar)
           _buildTripCard(
             image: AppImages.mahakaleshwar,
             title: 'Mahakaleshwar, Ujjain',
@@ -113,7 +214,11 @@ class _PassengerExploreTripsState extends State<PassengerExploreTrips> {
             seatsAvailable: true,
             price: '₹ 5000',
           ),
+
+        if (showMahakaleshwar && showSolangValley)
           const SizedBox(height: 12),
+
+        if (showSolangValley)
           _buildTripCard(
             image: AppImages.solangValley,
             title: 'Solang Valley, Manali',
@@ -124,35 +229,6 @@ class _PassengerExploreTripsState extends State<PassengerExploreTrips> {
             seatsAvailable: false,
             price: '₹ 10,000',
           ),
-        ],
-      );
-    }
-    if (selectedTab == 1) {
-      return _buildNoTripsMessage('No trips available this week.');
-    }
-    return Column(
-      children: [
-        _buildTripCard(
-          image: AppImages.mahakaleshwar,
-          title: 'Mahakaleshwar, Ujjain',
-          rating: '4.9',
-          date: '15 Oct - 20 Oct',
-          vehicle: 'Premium AC Sleeper',
-          seats: '15 Seats Available',
-          seatsAvailable: true,
-          price: '₹ 5000',
-        ),
-        const SizedBox(height: 12),
-        _buildTripCard(
-          image: AppImages.solangValley,
-          title: 'Solang Valley, Manali',
-          rating: '4.7',
-          date: '22 Oct - 28 Oct',
-          vehicle: 'Luxury Executive',
-          seats: '2 Seats Available',
-          seatsAvailable: false,
-          price: '₹ 10,000',
-        ),
       ],
     );
   }
@@ -164,7 +240,10 @@ class _PassengerExploreTripsState extends State<PassengerExploreTrips> {
       alignment: Alignment.center,
       child: Text(
         message,
-        style: const TextStyle(fontSize: 12, color: Color(0xFF777777)),
+        style: const TextStyle(
+          fontSize: 12,
+          color: Color(0xFF777777),
+        ),
       ),
     );
   }
@@ -190,8 +269,15 @@ class _PassengerExploreTripsState extends State<PassengerExploreTrips> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
-            child: Image.asset(image, width: double.infinity, height: 120, fit: BoxFit.cover),
+            borderRadius: const BorderRadius.vertical(
+              top: Radius.circular(8),
+            ),
+            child: Image.asset(
+              image,
+              width: double.infinity,
+              height: 120,
+              fit: BoxFit.cover,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
@@ -206,39 +292,75 @@ class _PassengerExploreTripsState extends State<PassengerExploreTrips> {
                         title,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.black),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 5),
-                    const Icon(Icons.star, size: 10, color: Color(0xFF777777)),
+                    const Icon(
+                      Icons.star,
+                      size: 10,
+                      color: Color(0xFF777777),
+                    ),
                     const SizedBox(width: 2),
-                    Text(rating, style: const TextStyle(fontSize: 9, color: Color(0xFF555555))),
+                    Text(
+                      rating,
+                      style: const TextStyle(
+                        fontSize: 9,
+                        color: Color(0xFF555555),
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 7),
                 Row(
                   children: [
-                    const Icon(Icons.calendar_today_outlined, size: 10, color: Color(0xFF555555)),
+                    const Icon(
+                      Icons.calendar_today_outlined,
+                      size: 10,
+                      color: Color(0xFF555555),
+                    ),
                     const SizedBox(width: 4),
-                    Text(date, style: const TextStyle(fontSize: 8, color: Color(0xFF555555))),
+                    Text(
+                      date,
+                      style: const TextStyle(
+                        fontSize: 8,
+                        color: Color(0xFF555555),
+                      ),
+                    ),
                     const SizedBox(width: 12),
-                    const Icon(Icons.directions_bus_outlined, size: 10, color: Color(0xFF555555)),
+                    const Icon(
+                      Icons.directions_bus_outlined,
+                      size: 10,
+                      color: Color(0xFF555555),
+                    ),
                     const SizedBox(width: 4),
                     Expanded(
                       child: Text(
                         vehicle,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 8, color: Color(0xFF555555)),
+                        style: const TextStyle(
+                          fontSize: 8,
+                          color: Color(0xFF555555),
+                        ),
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 7),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 7,
+                    vertical: 3,
+                  ),
                   decoration: BoxDecoration(
-                    color: seatsAvailable ? const Color(0xFFD8F7E5) : const Color(0xFFFFDCDC),
+                    color: seatsAvailable
+                        ? const Color(0xFFD8F7E5)
+                        : const Color(0xFFFFDCDC),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Row(
@@ -247,7 +369,9 @@ class _PassengerExploreTripsState extends State<PassengerExploreTrips> {
                       Icon(
                         Icons.circle,
                         size: 6,
-                        color: seatsAvailable ? const Color(0xFF19A55B) : const Color(0xFFD83232),
+                        color: seatsAvailable
+                            ? const Color(0xFF19A55B)
+                            : const Color(0xFFD83232),
                       ),
                       const SizedBox(width: 4),
                       Text(
@@ -255,7 +379,9 @@ class _PassengerExploreTripsState extends State<PassengerExploreTrips> {
                         style: TextStyle(
                           fontSize: 8,
                           fontWeight: FontWeight.w500,
-                          color: seatsAvailable ? const Color(0xFF15934F) : const Color(0xFFD83232),
+                          color: seatsAvailable
+                              ? const Color(0xFF15934F)
+                              : const Color(0xFFD83232),
                         ),
                       ),
                     ],
@@ -269,24 +395,54 @@ class _PassengerExploreTripsState extends State<PassengerExploreTrips> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Starting at', style: TextStyle(fontSize: 8, color: Color(0xFF666666))),
+                          const Text(
+                            'Starting at',
+                            style: TextStyle(
+                              fontSize: 8,
+                              color: Color(0xFF666666),
+                            ),
+                          ),
                           const SizedBox(height: 1),
-                          Text(price, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.primary)),
+                          Text(
+                            price,
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.primary,
+                            ),
+                          ),
                         ],
                       ),
                     ),
                     SizedBox(
                       height: 31,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Tripdetails(),
+                            ),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primary,
                           foregroundColor: Colors.white,
                           elevation: 0,
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18),
+                          ),
                         ),
-                        child: const Text('View Details', style: TextStyle(fontSize: 9, fontWeight: FontWeight.w500)),
+                        child: const Text(
+                          'View Details',
+                          style: TextStyle(
+                            fontSize: 9,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       ),
                     ),
                   ],

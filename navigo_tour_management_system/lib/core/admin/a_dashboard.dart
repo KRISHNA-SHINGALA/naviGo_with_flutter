@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'a_create_trip.dart';
 import 'a_trip_details.dart';
 import 'package:navigo_tour_management_system/core/admin/admin_bottom_bar.dart';
+import 'package:navigo_tour_management_system/core/admin/admin_top_bar.dart';
 
 
 class AdminDashboard extends StatefulWidget {
@@ -49,12 +50,16 @@ class _AdminDashboardState extends State<AdminDashboard> {
       backgroundColor: Colors.white,
             bottomNavigationBar: const AdminBottomBar(currentIndex: 0), // Index 0 for Dashboard
 
-      body: SafeArea(
+body: SafeArea(
+  child: Column(
+    children: [
+      const AdminTopBar(),
+
+      Expanded(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(16, 14, 16, 20),
+          padding: const EdgeInsets.fromLTRB(10, 14, 10, 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            
             children: [
               const Text(
                 'Admin Overview',
@@ -67,7 +72,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
               const SizedBox(height: 16),
 
-              // Dashboard statistics
               Row(
                 children: [
                   Expanded(
@@ -90,7 +94,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
               const SizedBox(height: 26),
 
-              // Active trips heading and View All action
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -122,7 +125,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
               const SizedBox(height: 8),
 
-              // Display all active trip cards
               ..._trips.map(
                 (trip) => Padding(
                   padding: const EdgeInsets.only(bottom: 10),
@@ -132,7 +134,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
               const SizedBox(height: 8),
 
-              // Create a new trip
               SizedBox(
                 width: double.infinity,
                 height: 48,
@@ -159,6 +160,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
           ),
         ),
       ),
+    ],
+  ),
+),
 
       // Floating action button for quick trip creation
       floatingActionButton: FloatingActionButton(
