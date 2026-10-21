@@ -60,14 +60,7 @@ class _AdminCancelRequestState extends State<AdminCancelRequest> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FB),
-      appBar: AppBar(
-        backgroundColor: primaryBlue,
-        foregroundColor: Colors.white,
-        title: const Text(
-          'Cancellation Requests',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
+     
       body: Column(
         children: [
           Container(

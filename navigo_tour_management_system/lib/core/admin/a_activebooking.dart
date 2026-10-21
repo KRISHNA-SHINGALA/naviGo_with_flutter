@@ -84,14 +84,7 @@ class _AdminActiveBookingState extends State<AdminActiveBooking> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FB),
-      appBar: AppBar(
-        backgroundColor: primaryBlue,
-        foregroundColor: Colors.white,
-        title: const Text(
-          'Active Bookings',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
+      
       body: Column(
         children: [
           Padding(

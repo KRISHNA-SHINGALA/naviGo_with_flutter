@@ -6,7 +6,6 @@ import 'package:navigo_tour_management_system/core/passenger/passenger_top_bar.d
 import 'package:navigo_tour_management_system/resources/colors.dart';
 import 'package:navigo_tour_management_system/resources/strings.dart';
 import 'passenger_profile_screen.dart';
-import 'p_tripsdetails.dart';
 
 class AppImages {
   static const String mahakaleshwar = 'assets/images/mahakaleshwar.jpg';
