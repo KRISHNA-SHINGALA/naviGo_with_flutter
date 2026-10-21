@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'a_transaction_history.dart';
 import 'a_completedtrips_history.dart';
+import 'package:navigo_tour_management_system/core/admin/admin_bottom_bar.dart';
+
 
 class Admintransactioncompletedhistory extends StatelessWidget {
   const Admintransactioncompletedhistory({super.key});
@@ -15,6 +17,7 @@ class Admintransactioncompletedhistory extends StatelessWidget {
       length: 2,
       child: Scaffold(
         backgroundColor: const Color(0xFFF5F7FB),
+        bottomNavigationBar: const AdminBottomBar(currentIndex: 1),
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: primaryBlue,

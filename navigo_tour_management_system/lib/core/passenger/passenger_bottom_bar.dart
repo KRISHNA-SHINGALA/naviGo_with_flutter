@@ -1,9 +1,9 @@
+
 import 'package:flutter/material.dart';
 
 import 'package:navigo_tour_management_system/core/passenger/p_dashboard.dart';
 import 'package:navigo_tour_management_system/core/passenger/p_explore_trips.dart';
 import 'package:navigo_tour_management_system/core/passenger/p_upcoming&past.dart';
-import 'package:navigo_tour_management_system/core/passenger/p_booking.dart';
 import 'package:navigo_tour_management_system/core/passenger/passenger_profile_screen.dart';
 
 class PassengerBottomBar extends StatelessWidget {
@@ -12,7 +12,8 @@ class PassengerBottomBar extends StatelessWidget {
   const PassengerBottomBar({super.key, required this.currentIndex});
 
   void _onItemTapped(BuildContext context, int index) {
-    // Agar user usi tab par click kare jo already open hai, toh kuch mat karo
+    // Agar user usi tab par click kare jo already open hai,
+    // toh kuch mat karo
     if (currentIndex == index) return;
 
     Widget nextScreen;
@@ -28,16 +29,13 @@ class PassengerBottomBar extends StatelessWidget {
         nextScreen = const MyTrips();
         break;
       case 3:
-        nextScreen = const Booking();
-        break;
-      case 4:
-        nextScreen = const PassengerProfileScreen();
+        nextScreen = PassengerProfileScreen();
         break;
       default:
         return;
     }
 
-    // pushReplacement se previous page hat jayega aur naya page bina animation ke redirect hoga
+    // Previous page ko replace karke naya page open hoga
     Navigator.pushReplacement(
       context,
       PageRouteBuilder(
@@ -52,7 +50,9 @@ class PassengerBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border(top: BorderSide(color: Colors.grey.shade300, width: 1)),
+        border: Border(
+          top: BorderSide(color: Colors.grey.shade300, width: 1),
+        ),
       ),
       child: BottomNavigationBar(
         currentIndex: currentIndex,
@@ -85,11 +85,6 @@ class PassengerBottomBar extends StatelessWidget {
             icon: Icon(Icons.bookmark_border),
             activeIcon: Icon(Icons.bookmark),
             label: "Saved",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book_online_outlined),
-            activeIcon: Icon(Icons.book_online),
-            label: "Bookings",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),

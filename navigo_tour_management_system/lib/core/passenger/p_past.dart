@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:navigo_tour_management_system/core/passenger/passenger_eticket_screen.dart';
 
 class PPastTrips extends StatefulWidget {
   const PPastTrips({super.key});
@@ -158,10 +159,15 @@ class _PPastTripsState extends State<PPastTrips> {
                   SizedBox(
                     width: double.infinity,
 
-                    child: OutlinedButton(
-                      onPressed: () {
-                        // View Ticket
-                      },
+                    child:OutlinedButton(
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const PassengerETicketScreen(),
+      ),
+    );
+  },
 
                       style: OutlinedButton.styleFrom(
                         side: const BorderSide(

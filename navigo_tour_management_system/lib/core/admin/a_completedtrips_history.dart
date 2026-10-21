@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-
 class AdminCompletedTrips extends StatelessWidget {
   const AdminCompletedTrips({super.key});
 

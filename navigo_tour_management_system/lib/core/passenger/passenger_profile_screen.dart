@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:navigo_tour_management_system/core/passenger/passenger_bottom_bar.dart';
-import 'package:navigo_tour_management_system/core/passenger/passenger_top_bar.dart';
 import 'passenger_edit_profile_screen.dart';
 
 class PassengerProfileScreen extends StatelessWidget {
@@ -12,15 +11,8 @@ class PassengerProfileScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60.0), 
-        child: PassengerTopBar(
-          onProfileTap: () {
-            // Already on Profile page, do nothing here to avoid infinite loops
-          },
-        ),
-      ),
-      bottomNavigationBar: const PassengerBottomBar(currentIndex: 4), // Index 4 for Profile
+      
+      bottomNavigationBar: const PassengerBottomBar(currentIndex: 3), // Index 3 for Profile
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),

@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
-
+import 'package:navigo_tour_management_system/core/admin/admin_bottom_bar.dart';
 import 'a_activebooking.dart';
 import 'a_cancelreq.dart';
-
+import 'package:navigo_tour_management_system/core/admin/admin_top_bar.dart';
 class AdminActiveBookingCancelReq extends StatelessWidget {
   const AdminActiveBookingCancelReq({super.key});
 
@@ -15,6 +15,8 @@ class AdminActiveBookingCancelReq extends StatelessWidget {
       length: 2,
       child: Scaffold(
         backgroundColor: const Color(0xFFF5F7FB),
+              bottomNavigationBar: const AdminBottomBar(currentIndex: 2), // Index 2 for Saved/My Trips
+
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: primaryBlue,

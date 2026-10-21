@@ -1,8 +1,9 @@
 
 import 'package:flutter/material.dart';
-
 import 'a_create_trip.dart';
 import 'a_trip_details.dart';
+import 'package:navigo_tour_management_system/core/admin/admin_bottom_bar.dart';
+
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
@@ -46,11 +47,14 @@ class _AdminDashboardState extends State<AdminDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+            bottomNavigationBar: const AdminBottomBar(currentIndex: 0), // Index 0 for Dashboard
+
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(16, 14, 16, 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            
             children: [
               const Text(
                 'Admin Overview',

@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'admin_edit_profile_screen.dart';
+import 'package:navigo_tour_management_system/core/admin/admin_bottom_bar.dart';
+
 
 class AdminProfileScreen extends StatefulWidget {
   const AdminProfileScreen({super.key});
@@ -50,6 +52,8 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FB),
+            bottomNavigationBar: const AdminBottomBar(currentIndex: 3), // Index 3 for Profile
+
       appBar: AppBar(
         backgroundColor: primaryBlue,
         foregroundColor: Colors.white,

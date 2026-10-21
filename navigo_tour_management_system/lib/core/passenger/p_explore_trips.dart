@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:navigo_tour_management_system/core/passenger/passenger_bottom_bar.dart';
-import 'package:navigo_tour_management_system/core/passenger/passenger_top_bar.dart';
 import 'package:navigo_tour_management_system/resources/colors.dart';
 import 'package:navigo_tour_management_system/resources/image.dart';
-import 'passenger_profile_screen.dart'; // Add this import
 
 class PassengerExploreTrips extends StatefulWidget {
   const PassengerExploreTrips({super.key});
@@ -19,22 +17,6 @@ class _PassengerExploreTripsState extends State<PassengerExploreTrips> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-appBar: PreferredSize(
-  preferredSize: const Size.fromHeight(100),
-  child: SafeArea(
-    bottom: false,
-    child: PassengerTopBar(
-      onProfileTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const PassengerProfileScreen(),
-          ),
-        );
-      },
-    ),
-  ),
-),
       bottomNavigationBar: const PassengerBottomBar(currentIndex: 1), // Index 1 for Tours
       body: SafeArea(
         child: SingleChildScrollView(

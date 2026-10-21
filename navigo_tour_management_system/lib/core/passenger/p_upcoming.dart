@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:navigo_tour_management_system/core/passenger/p_tripsdetails.dart';
 
 class PUpcoming extends StatefulWidget {
   const PUpcoming({super.key});
@@ -153,9 +154,14 @@ class _PUpcomingState extends State<PUpcoming> {
                     width: double.infinity,
 
                     child: OutlinedButton(
-                      onPressed: () {
-                        // View Ticket
-                      },
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const Tripdetails(),
+      ),
+    );
+  },
 
                       style: OutlinedButton.styleFrom(
                         side: const BorderSide(
@@ -174,7 +180,7 @@ class _PUpcomingState extends State<PUpcoming> {
                       ),
 
                       child: const Text(
-                        'View Ticket',
+                        'Trip Details',
 
                         style: TextStyle(
                           color: Colors.blue,

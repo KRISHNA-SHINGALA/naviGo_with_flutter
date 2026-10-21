@@ -1,8 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:navigo_tour_management_system/core/passenger/passenger_bottom_bar.dart';
-import 'package:navigo_tour_management_system/core/passenger/passenger_top_bar.dart';
-import 'passenger_profile_screen.dart';
 import 'p_booking.dart';
 import 'p_map_view.dart';
 
@@ -20,20 +18,6 @@ class _TripdetailsState extends State<Tripdetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60.0),
-        child: PassengerTopBar(
-          onProfileTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    const PassengerProfileScreen(),
-              ),
-            );
-          },
-        ),
-      ),
       bottomNavigationBar:
           const PassengerBottomBar(currentIndex: 1),
       body: SingleChildScrollView(
