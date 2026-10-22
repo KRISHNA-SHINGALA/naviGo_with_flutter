@@ -1,29 +1,38 @@
 
 import 'package:flutter/material.dart';
-import 'admin_edit_profile_screen.dart';
-import 'package:navigo_tour_management_system/core/admin/admin_bottom_bar.dart';
 
+import 'package:navigo_tour_management_system/core/admin/admin_bottom_bar.dart';
+import 'package:navigo_tour_management_system/core/admin/admin_top_bar.dart';
+import 'package:navigo_tour_management_system/core/auth/login_screen.dart';
+
+import 'admin_edit_profile_screen.dart';
+import 'a_activebooking_cancelreq.dart';
+import 'a_transaction_history.dart';
+import 'A_help_support.dart';
 
 class AdminProfileScreen extends StatefulWidget {
   const AdminProfileScreen({super.key});
 
   @override
-  State<AdminProfileScreen> createState() => _AdminProfileScreenState();
+  State<AdminProfileScreen> createState() =>
+      _AdminProfileScreenState();
 }
 
 class _AdminProfileScreenState extends State<AdminProfileScreen> {
-  final Color primaryBlue = const Color(0xFF0056D2);
+  static const Color primaryBlue = Color(0xFF0056D2);
+  static const Color lightBlue = Color(0xFFD8E4FF);
 
-  String adminName = 'Krisha Patel';
-  String adminEmail = 'admin@navigo.com';
+  String adminName = 'Krishna Patel';
+  String adminEmail = 'kshingala491@rku.ac.in';
   String adminPhone = '+91 98765 43210';
   String adminRole = 'Trip Administrator';
 
+  // Open Edit Profile screen.
   Future<void> _openEditProfile() async {
     final result = await Navigator.push<Map<String, String>>(
       context,
       MaterialPageRoute(
-        builder: (_) => AdminEditProfileScreen(
+        builder: (context) => AdminEditProfileScreen(
           name: adminName,
           email: adminEmail,
           phone: adminPhone,
@@ -32,164 +41,262 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
       ),
     );
 
-    if (result != null && mounted) {
-      setState(() {
-        adminName = result['name'] ?? adminName;
-        adminEmail = result['email'] ?? adminEmail;
-        adminPhone = result['phone'] ?? adminPhone;
-        adminRole = result['role'] ?? adminRole;
-      });
+    if (!mounted || result == null) return;
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Profile updated successfully'),
-        ),
-      );
-    }
+    setState(() {
+      adminName = result['name'] ?? adminName;
+      adminEmail = result['email'] ?? adminEmail;
+      adminPhone = result['phone'] ?? adminPhone;
+      adminRole = result['role'] ?? adminRole;
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Profile updated successfully'),
+      ),
+    );
+  }
+
+  // Open Booking page.
+  void _openBookings() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            const AdminActiveBookingCancelReq(),
+      ),
+    );
+  }
+
+  // Open Payment History page.
+  void _openPaymentHistory() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ATransactionHistory(),
+      ),
+    );
+  }
+
+  // Open Help & Support page.
+  void _openHelpSupport() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const A_HelpSupport(),
+      ),
+    );
+  }
+
+  // Show About NaviGo information.
+  void _openAbout() {
+    showAboutDialog(
+      context: context,
+      applicationName: 'NaviGo',
+      applicationVersion: '1.0.0',
+      applicationLegalese: 'Tour Management System',
+    );
+  }
+
+  // Navigate to Login and clear the previous route stack.
+  void _logout() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginScreen(),
+      ),
+      (route) => false,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FB),
-            bottomNavigationBar: const AdminBottomBar(currentIndex: 3), // Index 3 for Profile
+      backgroundColor: Colors.white,
 
-      appBar: AppBar(
-        backgroundColor: primaryBlue,
-        foregroundColor: Colors.white,
-        elevation: 0,
-        title: const Text(
-          'My Profile',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+      // Existing shared bottom navigation.
+      bottomNavigationBar: const AdminBottomBar(
+        currentIndex: 3,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
+
+      // Existing shared top navigation.
+      body: SafeArea(
         child: Column(
           children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Column(
-                children: [
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundColor: primaryBlue.withAlpha(25),
-                    child: Text(
-                      _getInitials(adminName),
-                      style: TextStyle(
-                        color: primaryBlue,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
+            const AdminTopBar(),
+
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(
+                  16,
+                  24,
+                  16,
+                  24,
+                ),
+                child: Column(
+                  children: [
+                    // Admin profile photo placeholder.
+                    CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.grey.shade300,
+                      child: Icon(
+                        Icons.person,
+                        size: 58,
+                        color: Colors.grey.shade500,
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    adminName,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF102A43),
+
+                    const SizedBox(height: 14),
+
+                    // Admin name.
+                    Text(
+                      adminName,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF202124),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    adminRole,
-                    style: TextStyle(
-                      color: primaryBlue,
-                      fontWeight: FontWeight.w600,
+
+                    const SizedBox(height: 4),
+
+                    // Admin email.
+                    Text(
+                      adminEmail,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey.shade700,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                      onPressed: _openEditProfile,
-                      icon: const Icon(Icons.edit_outlined),
-                      label: const Text('Edit Profile'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryBlue,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+
+                    const SizedBox(height: 9),
+
+                    // Verified Admin badge.
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 7,
+                      ),
+                      decoration: BoxDecoration(
+                        color: lightBlue,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.verified_outlined,
+                            size: 17,
+                            color: primaryBlue,
+                          ),
+                          SizedBox(width: 6),
+                          Text(
+                            'Verified Admin',
+                            style: TextStyle(
+                              color: primaryBlue,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 14),
+
+                    // Edit Profile button.
+                    SizedBox(
+                      width: 220,
+                      height: 44,
+                      child: OutlinedButton(
+                        onPressed: _openEditProfile,
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: primaryBlue,
+                          side: const BorderSide(
+                            color: primaryBlue,
+                            width: 1.5,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(9),
+                          ),
+                        ),
+                        child: const Text(
+                          'Edit Profile',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 24),
-            _sectionTitle('Personal Information'),
-            const SizedBox(height: 12),
-            _infoCard(
-              Icons.person_outline,
-              'Full Name',
-              adminName,
-            ),
-            _infoCard(
-              Icons.email_outlined,
-              'Email Address',
-              adminEmail,
-            ),
-            _infoCard(
-              Icons.phone_outlined,
-              'Phone Number',
-              adminPhone,
-            ),
-            _infoCard(
-              Icons.admin_panel_settings_outlined,
-              'Role',
-              adminRole,
-            ),
-            const SizedBox(height: 24),
-            _sectionTitle('Account'),
-            const SizedBox(height: 12),
-            _accountTile(
-              Icons.lock_outline,
-              'Change Password',
-              'Password settings',
-              () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text(
-                      'Connect your password management screen here.',
+
+                    const SizedBox(height: 20),
+
+                    // Statistics cards.
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: _buildStatCard(
+                            icon: Icons.map_outlined,
+                            title: 'Total Tours',
+                            value: '12',
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: _buildStatCard(
+                            icon: Icons.groups_outlined,
+                            title: 'Total Passengers',
+                            value: '1.4k',
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                );
-              },
-            ),
-            _accountTile(
-              Icons.help_outline,
-              'Help & Support',
-              'Get assistance with NaviGo',
-              () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Help & Support selected'),
-                  ),
-                );
-              },
-            ),
-            _accountTile(
-              Icons.info_outline,
-              'About NaviGo',
-              'Trip management system',
-              () {
-                showAboutDialog(
-                  context: context,
-                  applicationName: 'NaviGo',
-                  applicationVersion: '1.0.0',
-                  applicationLegalese: 'Trip Management System',
-                );
-              },
+
+                    const SizedBox(height: 22),
+
+                    // My Bookings.
+                    _buildMenuItem(
+                      icon: Icons.apartment_outlined,
+                      title: 'My Bookings',
+                      onTap: _openBookings,
+                    ),
+
+                    // Payment History.
+                    _buildMenuItem(
+                      icon: Icons.payments_outlined,
+                      title: 'Payment History',
+                      onTap: _openPaymentHistory,
+                    ),
+
+                    // Help & Support.
+                    _buildMenuItem(
+                      icon: Icons.help_outline,
+                      title: 'Help & Support',
+                      onTap: _openHelpSupport,
+                    ),
+
+                    // About NaviGo.
+                    _buildMenuItem(
+                      icon: Icons.info_outline,
+                      title: 'About NaviGo',
+                      onTap: _openAbout,
+                    ),
+
+                    // Log Out.
+                    _buildMenuItem(
+                      icon: Icons.logout,
+                      title: 'Log Out',
+                      isLogout: true,
+                      showArrow: false,
+                      onTap: _logout,
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
@@ -197,74 +304,45 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
     );
   }
 
-  String _getInitials(String name) {
-    final parts = name.trim().split(RegExp(r'\s+'));
-
-    if (parts.isEmpty || parts.first.isEmpty) {
-      return 'A';
-    }
-
-    if (parts.length == 1) {
-      return parts.first[0].toUpperCase();
-    }
-
-    return '${parts.first[0]}${parts.last[0]}'.toUpperCase();
-  }
-
-  Widget _sectionTitle(String title) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Text(
-        title,
-        style: const TextStyle(
-          fontSize: 17,
-          fontWeight: FontWeight.bold,
-          color: Color(0xFF102A43),
-        ),
-      ),
-    );
-  }
-
-  Widget _infoCard(IconData icon, String title, String value) {
+  // Statistics card with sufficient height to avoid overflow.
+  Widget _buildStatCard({
+    required IconData icon,
+    required String title,
+    required String value,
+  }) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.all(16),
+      height: 112,
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
+        color: lightBlue,
+        borderRadius: BorderRadius.circular(10),
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: primaryBlue.withAlpha(20),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Icon(icon, color: primaryBlue, size: 22),
+          Icon(
+            icon,
+            size: 21,
+            color: primaryBlue,
           ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                  ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  value,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF102A43),
-                  ),
-                ),
-              ],
+          Text(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 12,
+              color: Color(0xFF003F9E),
+            ),
+          ),
+          Text(
+            value,
+            maxLines: 1,
+            style: const TextStyle(
+              fontSize: 24,
+              height: 1.0,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF0046AC),
             ),
           ),
         ],
@@ -272,27 +350,83 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
     );
   }
 
-  Widget _accountTile(
-    IconData icon,
-    String title,
-    String subtitle,
-    VoidCallback onTap,
-  ) {
+  // Reusable profile menu item.
+  Widget _buildMenuItem({
+    required IconData icon,
+    required String title,
+    required VoidCallback onTap,
+    bool isLogout = false,
+    bool showArrow = true,
+  }) {
+    final Color itemColor = isLogout
+        ? const Color(0xFFD92D20)
+        : primaryBlue;
+
     return Container(
+      height: 52,
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: ListTile(
-        leading: Icon(icon, color: primaryBlue),
-        title: Text(
-          title,
-          style: const TextStyle(fontWeight: FontWeight.w600),
+        border: Border.all(
+          color: Colors.grey.shade300,
+          width: 1,
         ),
-        subtitle: Text(subtitle),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: onTap,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(10),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(10),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 6,
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    color: isLogout
+                        ? const Color(0xFFFCE3E1)
+                        : const Color(0xFFBDCEE9),
+                    borderRadius: BorderRadius.circular(7),
+                  ),
+                  child: Icon(
+                    icon,
+                    size: 19,
+                    color: itemColor,
+                  ),
+                ),
+
+                const SizedBox(width: 12),
+
+                Expanded(
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: isLogout
+                          ? const Color(0xFFD92D20)
+                          : const Color(0xFF202124),
+                    ),
+                  ),
+                ),
+
+                if (showArrow)
+                  Icon(
+                    Icons.chevron_right,
+                    size: 22,
+                    color: Colors.grey.shade600,
+                  ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
