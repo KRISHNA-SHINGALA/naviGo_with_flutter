@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:navigo_tour_management_system/core/admin/a_dashboard.dart';
 import 'package:navigo_tour_management_system/core/auth/a_forgot_pass.dart';
@@ -62,7 +63,19 @@ class _AdminLoginState extends State<AdminLogin> {
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             ),
-            validator: (value) => value!.isEmpty ? "Enter Email ID" : null,
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return "Enter Email ID";
+              }
+
+              if (!RegExp(
+                r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+              ).hasMatch(value.trim())) {
+                return "Enter a valid Email ID";
+              }
+
+              return null;
+            },
           ),
           const SizedBox(height: 16),
           const Text(
@@ -89,7 +102,17 @@ class _AdminLoginState extends State<AdminLogin> {
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             ),
-            validator: (value) => value!.isEmpty ? "Enter Password" : null,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return "Enter Password";
+              }
+
+              if (value.length < 8) {
+                return "Password must be at least 8 characters";
+              }
+
+              return null;
+            },
           ),
           const SizedBox(height: 8),
           Align(
@@ -126,38 +149,39 @@ class _AdminLoginState extends State<AdminLogin> {
                 ),
                 elevation: 0,
               ),
-              
+
               child: GestureDetector(
-                      onTap: () {
-                        // Ye code aapko Register page par bhej dega
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const AdminDashboard()),
-                        );
-                      },
-                    
-              
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Login",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                onTap: () {
+                  // Ye code aapko Register page par bhej dega
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AdminDashboard(),
                     ),
-                  ),
-                  SizedBox(width: 8),
-                  Icon(
-                    Icons.arrow_forward,
-                    color: Colors.white,
-                    size: 20,
-                  ),
-                ],
+                  );
+                },
+
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Login",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Icon(
+                      Icons.arrow_forward,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
           )
         ],
       ),
