@@ -11,22 +11,29 @@ class AdminLogin extends StatefulWidget {
 }
 
 class _AdminLoginState extends State<AdminLogin> {
+  // Key used to validate the login form
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+
+  // Controllers used to access email and password input values
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  // Colors used in the login screen
   final Color primaryBlue = const Color(0xFF0056D2);
   final Color lightBlueFill = const Color(0xFFE2EAFB);
 
   @override
   void dispose() {
+    // Dispose controllers to release resources when the screen is removed
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
+  // Validate the form when the login button is pressed
   void _handleLogin() {
     if (_formkey.currentState!.validate()) {
+      // Execute this code only when all validations pass
       print("Admin Login Validated!");
     }
   }
@@ -34,11 +41,13 @@ class _AdminLoginState extends State<AdminLogin> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      // Connect the form to its validation key
       key: _formkey,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Email field label
           const Text(
             "Email ID",
             style: TextStyle(
@@ -48,6 +57,8 @@ class _AdminLoginState extends State<AdminLogin> {
             ),
           ),
           const SizedBox(height: 8),
+
+          // Email input field
           TextFormField(
             controller: _emailController,
             keyboardType: TextInputType.emailAddress,
@@ -63,6 +74,8 @@ class _AdminLoginState extends State<AdminLogin> {
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             ),
+
+            // Check that the email is not empty and has a valid format
             validator: (value) {
               if (value == null || value.trim().isEmpty) {
                 return "Enter Email ID";
@@ -74,10 +87,13 @@ class _AdminLoginState extends State<AdminLogin> {
                 return "Enter a valid Email ID";
               }
 
+              // Return null when the email is valid
               return null;
             },
           ),
           const SizedBox(height: 16),
+
+          // Password field label
           const Text(
             "Password",
             style: TextStyle(
@@ -87,6 +103,8 @@ class _AdminLoginState extends State<AdminLogin> {
             ),
           ),
           const SizedBox(height: 8),
+
+          // Password input field
           TextFormField(
             controller: _passwordController,
             obscureText: true,
@@ -102,6 +120,8 @@ class _AdminLoginState extends State<AdminLogin> {
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             ),
+
+            // Check that the password is not empty and has at least 8 characters
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return "Enter Password";
@@ -111,14 +131,18 @@ class _AdminLoginState extends State<AdminLogin> {
                 return "Password must be at least 8 characters";
               }
 
+              // Return null when the password is valid
               return null;
             },
           ),
           const SizedBox(height: 8),
+
+          // Forgot password button aligned to the right
           Align(
             alignment: Alignment.centerRight,
             child: TextButton(
               onPressed: () {
+                // Navigate to the admin forgot password screen
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -137,10 +161,13 @@ class _AdminLoginState extends State<AdminLogin> {
             ),
           ),
           const SizedBox(height: 16),
+
+          // Login button
           SizedBox(
             width: double.infinity,
             height: 50,
             child: ElevatedButton(
+              // Validate the form when the button is pressed
               onPressed: _handleLogin,
               style: ElevatedButton.styleFrom(
                 backgroundColor: primaryBlue,
@@ -150,9 +177,10 @@ class _AdminLoginState extends State<AdminLogin> {
                 elevation: 0,
               ),
 
+              // GestureDetector handles navigation to the admin dashboard
               child: GestureDetector(
                 onTap: () {
-                  // Ye code aapko Register page par bhej dega
+                  // Navigate to the admin dashboard
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -161,6 +189,7 @@ class _AdminLoginState extends State<AdminLogin> {
                   );
                 },
 
+                // Login button text and arrow icon
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
