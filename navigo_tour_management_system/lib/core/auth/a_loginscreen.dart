@@ -24,17 +24,25 @@ class _AdminLoginState extends State<AdminLogin> {
 
   @override
   void dispose() {
-    // Dispose controllers to release resources when the screen is removed
+    // Dispose controllers to release resources
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
-  // Validate the form when the login button is pressed
+  // Validate the form and navigate to the dashboard if valid
   void _handleLogin() {
     if (_formkey.currentState!.validate()) {
-      // Execute this code only when all validations pass
+      // Display a message when all validations pass
       print("Admin Login Validated!");
+
+      // Navigate to the admin dashboard
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const AdminDashboard(),
+        ),
+      );
     }
   }
 
@@ -75,7 +83,7 @@ class _AdminLoginState extends State<AdminLogin> {
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             ),
 
-            // Check that the email is not empty and has a valid format
+            // Check whether the email is empty or has an invalid format
             validator: (value) {
               if (value == null || value.trim().isEmpty) {
                 return "Enter Email ID";
@@ -121,7 +129,7 @@ class _AdminLoginState extends State<AdminLogin> {
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             ),
 
-            // Check that the password is not empty and has at least 8 characters
+            // Check whether the password is empty or shorter than 8 characters
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return "Enter Password";
@@ -167,7 +175,7 @@ class _AdminLoginState extends State<AdminLogin> {
             width: double.infinity,
             height: 50,
             child: ElevatedButton(
-              // Validate the form when the button is pressed
+              // Run validation and navigate only when all fields are valid
               onPressed: _handleLogin,
               style: ElevatedButton.styleFrom(
                 backgroundColor: primaryBlue,
@@ -177,38 +185,25 @@ class _AdminLoginState extends State<AdminLogin> {
                 elevation: 0,
               ),
 
-              // GestureDetector handles navigation to the admin dashboard
-              child: GestureDetector(
-                onTap: () {
-                  // Navigate to the admin dashboard
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AdminDashboard(),
-                    ),
-                  );
-                },
-
-                // Login button text and arrow icon
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Login",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Icon(
-                      Icons.arrow_forward,
+              // Display the login text and arrow icon
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Login",
+                    style: TextStyle(
+                      fontSize: 16,
                       color: Colors.white,
-                      size: 20,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
-                ),
+                  ),
+                  SizedBox(width: 8),
+                  Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ],
               ),
             ),
           )
