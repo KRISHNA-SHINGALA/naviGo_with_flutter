@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:navigo_tour_management_system/core/auth/login_screen.dart';
+import 'package:navigo_tour_management_system/core/passenger/p_help_support_page.dart';
 import 'package:navigo_tour_management_system/core/passenger/p_upcoming&past.dart';
 import 'package:navigo_tour_management_system/core/passenger/passenger_bottom_bar.dart';
 
@@ -122,15 +123,7 @@ class PassengerProfileScreen extends StatelessWidget {
                 false,
                 const MyTrips(),
               ),
-
-              // Navigate to the App Settings page.
-              _buildMenuCard(
-                context,
-                Icons.settings_outlined,
-                "App Settings",
-                false,
-                const AppPage(),
-              ),
+          
 
               // Navigate to the Help & Support page.
               _buildMenuCard(
@@ -138,7 +131,7 @@ class PassengerProfileScreen extends StatelessWidget {
                 Icons.help_outline,
                 "Help & Support",
                 false,
-                const HelpSupportPage(),
+                const P_HelpSupportPage(),
               ),
 
               // Log out and prevent returning to the profile page.
