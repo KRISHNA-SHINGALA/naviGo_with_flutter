@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'a_trip_details.dart'; // Import for navigation
+import 'a_trip_details.dart'; 
 
 class AdminMapView extends StatefulWidget {
   const AdminMapView({super.key, required String tripTitle, required String originCity, required double pricePerSeat, required String busType, required String destinationCity, required String startDate, required String endDate, required int totalSeats, Uint8List? coverImage});
