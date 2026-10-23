@@ -489,17 +489,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ),
 
              child: ElevatedButton(
-  onPressed: () {
-    if (selectedPaymentMethod == 'offline') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const PassengerETicketScreen(),
-        ),
-      );
-    }
-  },
-
+onPressed: () {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const PassengerETicketScreen(),
+    ),
+  );
+},
                 style: ElevatedButton.styleFrom(
                   backgroundColor:
                       const Color(0xFF3024C9),
