@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:navigo_tour_management_system/core/admin/admin_profile_screen.dart';
+//import 'package:navigo_tour_management_system/core/admin/admin_profile_screen.dart';
 //import 'package:navigo_tour_management_system/core/admin/a_dashboard.dart';
 // import 'package:navigo_tour_management_system/core/admin/a_dashboard.dart';
 //import 'package:navigo_tour_management_system/core/passenger/p_dashboard.dart';
@@ -16,7 +16,7 @@ import 'package:navigo_tour_management_system/core/admin/admin_profile_screen.da
 //import 'package:navigo_tour_management_system/core/passenger/p_payment.dart';
 //import 'package:navigo_tour_management_system/core/admin/a_history&report.dart';
 //import 'package:navigo_tour_management_system/core/auth/login_screen.dart';
-// import 'package:navigo_tour_management_system/core/common/splash_screen.dart';
+import 'package:navigo_tour_management_system/core/common/splash_screen.dart';
 // import 'package:navigo_tour_management_system/core/passenger/passenger_eticket_screen.dart';
 // import 'package:navigo_tour_management_system/core/passenger/passenger_profile_screen.dart';
 // import 'package:navigo_tour_management_system/core/passenger/p_upcoming&past.dart';
@@ -32,7 +32,7 @@ class NaviGoApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const AdminProfileScreen(), // Set the initial screen to SplashScreen
+      home: const SplashScreen(), // Set the initial screen to SplashScreen
     );
   }
 }
